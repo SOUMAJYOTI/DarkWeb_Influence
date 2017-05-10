@@ -1,0 +1,124 @@
+\RequirePackage{fix-cm}
+%
+%\documentclass{svjour3}                     % onecolumn (standard format)
+%\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
+\documentclass[smallextended]{svjour3}       % onecolumn (second format)
+%\documentclass[twocolumn]{svjour3}          % twocolumn
+%
+\smartqed  % flush right qed marks, e.g. at end of proof
+\usepackage{graphicx}
+\usepackage{amsmath}
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amsthm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
+\usepackage{amssymb}
+\usepackage{subcaption}
+\usepackage{grffile}
+\usepackage{cite}
+\usepackage[table,xcdraw]{xcolor}
+\theoremstyle{definition}
+
+\makeatletter
+\newcommand\subparagraph{%
+	\@startsection{subparagraph}{5}
+	{\parindent}
+	{3.25ex \@plus 1ex \@minus .2ex}
+	{-1em}
+	{\normalfont\normalsize\bfseries}}
+\makeatother
+\usepackage{titlesec}
+\let\subparagraph\relax
+
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\graphicspath{{./}}
+
+\DeclareMathOperator*{\argmaxA}{arg\,max}
+
+\begin{document}
+	\begin{table}[!h]
+		\centering
+		\renewcommand{\arraystretch}{1}
+		\caption{Properties of Forums: Top 6 forums by posts count}
+		\begin{tabular}{|p{1cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
+			\hline 
+			{\bf Forum Id} & {\bf \# Posts} & {\bf \# Users} 
+			&{\bf Start Date} & {\bf End Date} \\ 
+			\hline\hline
+			     54      & 82222 & 2391 & 01 Jun 2009 & 10 Aug 2016\\
+			\hline
+			41 & 23639 & 315 & 01 Dec 2004 & 24 Oct 2016\\
+			\hline 
+			45 & 20385 & 761 & 16 Aug 2016 & 28 Oct 2016    \\       
+			 \hline 
+			84 & 17161 & 359 & 30 Jun 2012 & 26  Sep 2016\\
+			\hline
+			34 & 6838 & 145 & 18 Jan 2014 & 01 Nov 2016\\
+			\hline
+			101 & 4266 & 238 & 17 May 2004 & 22 Jun 2016\\
+			\hline			
+		\end{tabular}
+		\label{tab:table2}
+	\end{table}
+
+\begin{thebibliography}{}
+	%
+	% and use \bibitem to create references. Consult the Instructions
+	% for authors for reference list style.
+	%
+	\bibitem{guo_cascade}
+	% Format for Journal Reference
+	{Elizabeth Phillips, Jason R.C. Nurse, Michael Goldsmith, Sadie Creese},
+	Extracting social structure from Darkweb forums,
+	in Proc. SOTICS ,
+	{2015.}
+	
+	\bibitem{guo_cascade}
+	% Format for Journal Reference
+	{Motoyama, Marti and McCoy, Damon and Levchenko, Kirill and Savage, Stefan and Voelker, Geoffrey M.},
+	An Analysis of Underground Forums,
+	in Proc. SIGCOMM ,
+	{2011.}
+	
+	\bibitem{guo_cascade}
+	% Format for Journal Reference
+	{L'Huillier, Gaston and Alvarez, Hector and R\'{\i}os, Sebasti\'{a}n A. and Aguilera, Felipe},
+		Topic-based Social Network Analysis for Virtual Communities of Interests in the Dark Web,
+		in Proc. KDD ,
+		{2010.}
+	
+	\bibitem{guo_cascade}
+	% Format for Journal Reference
+	{Anderson, Ashton and Huttenlocher, Daniel and Kleinberg, Jon and Leskovec, Jure},
+	Steering User Behavior with Badges,
+	in Proc. WWW ,
+	{2013.}
+	
+	\bibitem{guo_cascade}
+	% Format for Journal Reference
+	{Mcauley, Julian and Leskovec, Jure},
+	Discovering Social Circles in Ego Networks,
+	in NIPS ,
+	{2012.}
+	
+	\bibitem{Jeffrey}
+	% Format for Journal Reference
+	{Jeffrey Chan and Conor Hayes and Elizabeth Daly},
+	Decomposing Discussion Forums and Boards Using User Roles
+	in AAAI ICWSM ,
+	{2010.}
+		
+\end{thebibliography}
+
+\end{document}

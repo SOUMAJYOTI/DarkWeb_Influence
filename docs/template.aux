@@ -1,0 +1,233 @@
+\relax 
+\citation{kkt_viral}
+\citation{paulo_viral}
+\citation{leskovic_bib}
+\citation{stops_epid}
+\citation{hawkes_zha}
+\citation{seismic}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}}
+\citation{granger_causality}
+\citation{cui_behavior}
+\citation{leskovic_bib}
+\citation{paulo_book}
+\citation{hawkes_zha}
+\citation{zha_diffusion}
+\citation{hawkes_pp}
+\citation{seismic}
+\citation{sei_spreaders}
+\citation{kitsak}
+\citation{paulo}
+\citation{iitkgp}
+\citation{motif_uln}
+\citation{human_com}
+\citation{temporal_com}
+\citation{temporal_1}
+\citation{guo_cascade}
+\citation{guo_cascade}
+\citation{burst_time}
+\citation{leskovic_bib}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Table of Symbols\relax }}{4}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:table0}{{1}{4}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Technical Preliminaries}{4}}
+\newlabel{sec:tech_prelim}{{3}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces (a) \textit  {Growth curve} depicting the progress of a Type I cascade (b) Type II curve fitted to logistic function (c) Type III curve fitted to a concave increasing function (d) Type III curve fitted to a straight line curve.\relax }}{5}}
+\newlabel{fig:types_cascades}{{1}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Steep and Inhibition intervals}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces This flowchart lists the steps used in the identification of the \textit  {steep} and the \textit  {inhibition} intervals for $C$. Refer to \textbf  {Appendix}\textsuperscript  {A1} section for algorithm details. Refer to Table\nobreakspace  {}1\hbox {} for symbols. \textbf  {Step 1}: We obtain the Hawkes interval curve $H $ (fig. (c)) from the \textit  {Growth curve} $C$ (fig. (a)) by splitting the Hawkes curve (fig. (b)) into intervals of size $K_C$. \textbf  {HI} on the Y-axis refers to Hawkes Intensities. \textbf  {Step 2}: We set $t_{steep} $ (marked in green point) by selecting the first local maxima among neighborhood, of Hawkes values and obtain a set of $t_{inhib} $ (marked in red points) by selecting the local minima among neighborhood shown in fig. (d). Using the moving mean curve $M$ (fig. (f)) we filter out outliers. One such outlier is marked by the black dot in fig. (e) where H[t] $> $ M[t], marked in circle in fig. (f). At the end of this step we obtain $t_{steep} $ and a set $I_C$ of $t_{inhib} $ points shown in fig. (g). \textbf  {Step 3}: We consider the corpus of cascades $C_{all}$ and obtain the \textit  {Growth ratio} histogram (fig. (h)), where $Growth[t_{inhib}] = \frac  {|V^{t_{inhib}}_C|}{|V^{t_{steep}}_C|}$ and the \textit  {Time difference} histogram (fig. (i)), where $TG[t_{inhib}]$ = $t_{inhib} - t_{steep} $, $\forall $ $t_{inhib} \in I_C $, $\forall C \in C_{all}$. We use maximum likelihood estimation on the probability distribution of these two attributes to obtain the estimated thresholds of \textit  {Growth} and \textit  {Time difference}. We set the first time point $t$ in the lifecycle of cascade C, whose $Growth[t]$ and $TG[t]$ cross the estimated thresholds, as the final $t_{inhib}$ for $C$ shown in fig. (j). Note that $t_{inhib} $ in each cascade depends on when $t_{steep}$ occurs.\relax }}{7}}
+\newlabel{fig:steps_hawkes}{{2}{7}}
+\citation{seismic}
+\citation{hawkes_zha}
+\citation{hawkes_zha}
+\citation{mislove_sna}
+\newlabel{f1}{{3.1}{8}}
+\newlabel{step2}{{2}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Network Evolution Model}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Example showing how the network is partitioned over windows for feature analysis. Observe that $w_l$ denoting the last window considered in the analysis contains $t_{inhib}$. Each $w_i$ contains the same number of nodes equal to 4 in this example. Also observe that same timepoints can have multiple reshares for example, $t_2 $ and $t_3 $ both have 2 reshares. \relax }}{9}}
+\newlabel{fig:net_evolve}{{3}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Example to show the forest structure of $N_i$ $\forall i$ $>$ 1. Here we show an example $w_2$ whose structure would be 3 components with 2 single nodes as individual components.\relax }}{9}}
+\newlabel{fig:forest_windows}{{4}{9}}
+\citation{milo_motif}
+\citation{group_dyn}
+\citation{leskovic_bib}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Example to show the addition of diffusion edges to the cascade network structure.\relax }}{10}}
+\newlabel{fig:diff_edges}{{5}{10}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Motif patterns of size 4\relax }}{10}}
+\newlabel{tab:motif_patterns_4}{{2}{10}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Measurments for inhibition}{10}}
+\newlabel{sec:net_feat}{{4}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Motif based network features}{10}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Motif patterns of size 5\relax }}{11}}
+\newlabel{tab:motif_patterns}{{3}{11}}
+\citation{newman_wt}
+\citation{heavy_sub}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Role of motifs in a diffusion process\relax }}{12}}
+\newlabel{fig:motif_diffusion}{{6}{12}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Motif counts}{12}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Motif weights}{12}}
+\citation{evol_lesk}
+\citation{barabasi}
+\citation{evol_lesk}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {4.1.2.1}Edge weight model}{13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Probability $p_e(d)$ of a new edge $e$ choosing a target node of in-degree $d$.\relax }}{13}}
+\newlabel{fig:tgt_in_degree}{{7}{13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Probability $p_e(a)$ of a new edge $e$ choosing a source node of age $a$.\relax }}{14}}
+\newlabel{fig:node_age}{{8}{14}}
+\citation{guo_cascade}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {4.1.2.2}Computing the motif weights}{15}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}Motif transitions}{15}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces An example of motif transition. Figure (a) denotes a 4-size motif in some network $N_i$ for a cascade. Figures (b), (c) and (d) show 3 possible transition patterns into 5-sized motifs in the network $N_{i+1}$. Observe that in this ideal transition, all the nodes in motif in (a) are present in (b), (c) and (d) which may not always be the case.\relax }}{16}}
+\newlabel{fig:motifs_transition}{{9}{16}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4}Temporal motifs}{16}}
+\newlabel{sec:temporal_motifs}{{4.1.4}{16}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Motifs transition algorithm\relax }}{17}}
+\newlabel{Algo:MTransAlgo}{{1}{17}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Two kinds of temporal motifs. Colored nodes indicate a $\lambda $-frontier node while black nodes indicate an adopter. Yellow node $v$ indicate $|F_{N_i, \lambda _{gt}}(v)| \geq 1 $ while red node $v$ indicate $ |F_{N_i, \lambda _{lt}}(v)| \geq 1 $. \relax }}{17}}
+\newlabel{fig:lambda_motif}{{10}{17}}
+\citation{deg_entropy}
+\citation{deg_entropy}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Node based features}{18}}
+\newlabel{sec:node_feat}{{4.2}{18}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Degree entropy}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Betweenness centrality}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Clustering Coefficient}{18}}
+\citation{PageRank}
+\citation{Ghosh_pr}
+\citation{sei_spreaders}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Nodal Degree}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}PageRank}{19}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Dynamics of centrality changes}{19}}
+\newlabel{sec:cent_change}{{5}{19}}
+\citation{bass}
+\citation{youtube_susarla}
+\citation{kleinberg}
+\citation{granger_causality}
+\citation{granger_inf}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Statistical testing}{20}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Granger Causality}{21}}
+\newlabel{eq:full_reg}{{6}{21}}
+\newlabel{eq:half_reg}{{7}{21}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Obtaining the feature time series}{22}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Measuring causality}{22}}
+\citation{guo_cascade}
+\citation{guo_cascade}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Properties of Reposting Network and Cascades\relax }}{23}}
+\newlabel{tab:table2}{{4}{23}}
+\newlabel{eq:granger_null}{{8}{23}}
+\newlabel{eq:granger_full}{{9}{23}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Dataset description}{23}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Plots of motif counts. The left column denotes the plots of the network intervals before $w_{steep}$. The right column denotes the plots of the network intervals between $w_{steep}$ and $w_{inhib}$.\relax }}{24}}
+\newlabel{fig:mcounts_1}{{11}{24}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Experiments}{25}}
+\newlabel{sec:exp}{{8}{25}}
+\newlabel{fig:motif_trans}{{8}{25}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Plots of motif weights. The left column denotes the plots of the network intervals before $w_{steep}$. The right column denotes the plots of the network intervals between $w_{steep}$ and $w_{inhib}$. \relax }}{26}}
+\newlabel{fig:motif_weights}{{12}{26}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Plots of motif transitions. The left column denotes the plots of the network intervals before $w_{steep}$. The right column denotes the plots of the network intervals between $w_{steep}$ and $w_{inhib}$.\relax }}{27}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}Motifs}{28}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.1.1}Motifs count}{28}}
+\newlabel{sec:motif_count}{{8.1.1}{28}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.1.2}Motif Weights}{28}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Plots of temporal motif counts. The left column denotes the plots of the network intervals before $w_{steep}$. The right column denotes the plots of the network intervals between $w_{steep}$ and $w_{inhib}$. \relax }}{29}}
+\newlabel{fig:motif_frontier}{{14}{29}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces PageRank centrality values\relax }}{30}}
+\newlabel{fig:pr}{{15}{30}}
+\newlabel{fig:cc}{{\caption@xref {fig:cc}{ on input line 1043}}{30}}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Clustering coefficient values\relax }}{30}}
+\newlabel{fig:deg_ent}{{\caption@xref {fig:deg_ent}{ on input line 1061}}{31}}
+\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Degree entropy values\relax }}{31}}
+\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces Nodal degree values\relax }}{31}}
+\newlabel{fig:deg}{{18}{31}}
+\newlabel{fig:bw}{{\caption@xref {fig:bw}{ on input line 1097}}{31}}
+\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Betweenness values\relax }}{31}}
+\@writefile{lof}{\contentsline {figure}{\numberline {20}{\ignorespaces Log-likelihood for various $\lambda $ values. As can be seen the maximum reaches at $\lambda $ = 0.03 which serves as the final parameter value for the edge weight model.\relax }}{32}}
+\newlabel{fig:log_likelihood}{{20}{32}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.1.3}Motif transitions}{32}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.1.4}Temporal motifs}{32}}
+\newlabel{fig:pr_change}{{\caption@xref {fig:pr_change}{ on input line 1143}}{33}}
+\@writefile{lof}{\contentsline {figure}{\numberline {21}{\ignorespaces PageRank centrality first-order changes\relax }}{33}}
+\@writefile{lof}{\contentsline {figure}{\numberline {22}{\ignorespaces Clustering coefficient first-order changes\relax }}{33}}
+\newlabel{fig:cc_change}{{22}{33}}
+\@writefile{lof}{\contentsline {figure}{\numberline {23}{\ignorespaces Degree entropy first-order changes\relax }}{34}}
+\newlabel{fig:ent_change}{{23}{34}}
+\@writefile{lof}{\contentsline {figure}{\numberline {24}{\ignorespaces Nodal degree first-order changes\relax }}{34}}
+\newlabel{fig:deg_change}{{24}{34}}
+\@writefile{lof}{\contentsline {figure}{\numberline {25}{\ignorespaces Betweenness first-order changes\relax }}{34}}
+\newlabel{fig:bw_change}{{25}{34}}
+\citation{cluster_inhibit}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Node measures}{35}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}Node measures' first-order changes}{35}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4}Statistical testing for causality}{35}}
+\@writefile{lof}{\contentsline {figure}{\numberline {26}{\ignorespaces VAR model causality test results. \relax }}{36}}
+\@writefile{lof}{\contentsline {figure}{\numberline {27}{\ignorespaces Granger causality results. The bar plot shows the percentage of cascades where the network feature $NC_f$ granger causes $\mathcal  {E}$.\relax }}{36}}
+\newlabel{fig:causality_plot}{{27}{36}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{36}}
+\newlabel{eq:hawkes_prob}{{10}{37}}
+\citation{seismic}
+\citation{hawkes_zha}
+\@writefile{lof}{\contentsline {figure}{\numberline {28}{\ignorespaces Probability density function $h $ or memory kernel - Reaction time distribution. The reaction time is plotted in logarithmic axes.\relax }}{38}}
+\newlabel{fig:pdf_hawkes}{{28}{38}}
+\newlabel{eq:hawkes_eq}{{11}{38}}
+\newlabel{eq:hawkes_seismic}{{12}{38}}
+\@writefile{lof}{\contentsline {figure}{\numberline {29}{\ignorespaces Two examples of incorrect identification (a) one where the inhibition point gets identified before the actual start. (b) inhibition point gets identified after the actual start. Green points denote the correct $t_{inhib}$. Red points show the incorrect region which the algorithm identifies as $t_{inhib}$.\relax }}{40}}
+\newlabel{fig:wrong_points}{{29}{40}}
+\citation{nelder}
+\@writefile{lof}{\contentsline {figure}{\numberline {30}{\ignorespaces (a) Growth ratio histogram (b) Time gap histogram\relax }}{41}}
+\newlabel{fig:growth_hist}{{30}{41}}
+\newlabel{app:A2}{{9}{41}}
+\bibcite{guo_cascade}{1}
+\bibcite{kkt_viral}{2}
+\bibcite{paulo_viral}{3}
+\bibcite{hawkes_zha}{4}
+\bibcite{viral_marketing}{5}
+\bibcite{rumor}{6}
+\bibcite{Cui_outbreak}{7}
+\bibcite{cui_behavior}{8}
+\bibcite{burst_time}{9}
+\bibcite{stops_epid}{10}
+\bibcite{digg}{11}
+\bibcite{leskovic_bib}{12}
+\@writefile{lof}{\contentsline {figure}{\numberline {31}{\ignorespaces $\lambda $ vs $\alpha $ for (a) Growth ratio (b) Time gap\relax }}{42}}
+\newlabel{fig:parm_sens}{{31}{42}}
+\bibcite{leskovic_blogs}{13}
+\bibcite{iitkgp}{14}
+\bibcite{human_com}{15}
+\bibcite{motif_uln}{16}
+\bibcite{temporal_com}{17}
+\bibcite{temporal_editor}{18}
+\bibcite{temporal_1}{19}
+\bibcite{milo_motif}{20}
+\bibcite{leskovic_bursty}{21}
+\bibcite{menger}{22}
+\bibcite{paulo}{23}
+\bibcite{kitsak}{24}
+\bibcite{Jenders}{25}
+\bibcite{predict_twitter}{26}
+\bibcite{hawkes_crime}{27}
+\bibcite{seismic}{28}
+\bibcite{point_process}{29}
+\bibcite{hawkes_pp}{30}
+\bibcite{PageRank}{31}
+\bibcite{Ghosh_pr}{32}
+\bibcite{sei_spreaders}{33}
+\bibcite{cc}{34}
+\bibcite{yu_lifecyle}{35}
+\bibcite{nelder}{36}
+\bibcite{zha_diffusion}{37}
+\bibcite{paulo_book}{38}
+\bibcite{cluster_inhibit}{39}
+\bibcite{Leskovec_patterns}{40}
+\bibcite{nelder}{41}
+\bibcite{granger_causality}{42}
+\bibcite{mislove_sna}{43}
+\bibcite{newman_wt}{44}
+\bibcite{group_dyn}{45}
+\bibcite{heavy_sub}{46}
+\bibcite{evol_lesk}{47}
+\bibcite{barabasi}{48}
+\bibcite{deg_entropy}{49}
+\bibcite{bass}{50}
+\bibcite{youtube_susarla}{51}
+\bibcite{kleinberg}{52}
+\bibcite{granger_inf}{53}

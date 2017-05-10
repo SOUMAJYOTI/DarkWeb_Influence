@@ -1,0 +1,1101 @@
+Topic 0:
+  vendors:1136.92
+  money:633.57
+  pandora:208.79
+  keyz:194.07
+  ultimate:176.42
+  shared send:169.32
+  clean money:162.70
+  foreign:156.45
+  mdma labtested purity:128.01
+  predictions:118.43
+  created expires usage:113.08
+  prediction:112.20
+  expires:111.22
+  months:98.30
+  rollf:97.03
+  mein:97.03
+  rollfz:97.03
+  commision:97.03
+  encryption:95.70
+  place:88.69
+
+Topic 1:
+  disk:197.06
+  nakamoto:108.25
+  blackbank:97.67
+  theories:62.31
+  card:56.29
+  newsweek:48.44
+  thumbdrive:34.63
+  provided:34.42
+  size:30.88
+  provider:29.65
+  lose money:25.77
+  customer service:13.55
+  unknown zaphod:13.48
+  private public:13.21
+  vendor buyer:0.93
+  wallet electrum:0.61
+  release funds:0.21
+  length time:0.10
+  email address:0.09
+  purchase:0.07
+
+Topic 2:
+  expiry:324.49
+  created expires usage:190.42
+  move:162.14
+  house:155.89
+  pawn:150.08
+  piece:143.55
+  subgraph:143.38
+  security:143.32
+  czech:142.49
+  revoked:130.50
+  square:130.50
+  police:119.53
+  crypto market:118.98
+  ikovsk:117.44
+  expires:116.57
+  letter:112.42
+  unknown zaphod king universe:104.40
+  return address:101.98
+  command:101.73
+  passphrase:97.71
+
+Topic 3:
+  account:677.13
+  server:593.54
+  chat:558.91
+  anonymous:502.47
+  fingerprint:367.82
+  contact:325.76
+  online:300.79
+  jabber:284.17
+  safe mail:225.63
+  earn:221.86
+  romeo:214.86
+  pluto:214.86
+  recommended:199.51
+  juliet:194.07
+  username:159.41
+  secret identity:152.48
+  encrypted:146.24
+  product bought customer recommended:143.55
+  accounts:138.73
+  support:136.96
+
+Topic 4:
+  blackberry:548.92
+  rcmp:499.21
+  multi:297.70
+  police:260.97
+  global:180.53
+  court:177.45
+  encryption:172.94
+  years:160.93
+  messages:155.98
+  fake:143.34
+  blackberrys:138.32
+  homology sphere:117.43
+  device:113.07
+  legal:107.99
+  decryption:104.65
+  sphere:104.38
+  case:102.00
+  orders:97.05
+  people:90.69
+  company:90.26
+
+Topic 5:
+  windows:672.74
+  dash:465.67
+  code:301.92
+  linux:229.81
+  physical isolation:202.14
+  virtual isolation:199.50
+  membership concealment:192.40
+  advantages:187.13
+  encryption:171.49
+  tested:150.39
+  physical isolation virtual isolation:143.46
+  full disk encryption:128.76
+  operating system:128.54
+  signed message:121.82
+  microsoft:118.72
+  friend:118.48
+  social media:115.09
+  free create:108.15
+  myoldfriend:104.40
+  public:92.39
+
+Topic 6:
+  silk road:811.12
+  community:529.82
+  staff:485.39
+  attack:328.22
+  withdrawals:301.02
+  attacker:291.51
+  team:264.64
+  time:260.82
+  month:209.86
+  system:202.74
+  security:181.71
+  account:181.54
+  safe:166.07
+  hiniguel:150.07
+  defcon:149.81
+  accounts:138.04
+  server:130.70
+  openbazaar:130.08
+  people:124.52
+  failure:117.46
+
+Topic 7:
+  hidden services:522.36
+  drive:431.75
+  coinbase:192.29
+  passport:138.61
+  state:132.14
+  clearnet sites:113.30
+  mafia:104.36
+  animals:97.83
+  germany:97.51
+  virtual:90.07
+  rules:85.03
+  learn:68.85
+  camorra:65.20
+  coinit:65.11
+  york:62.36
+  lawsky:62.36
+  tails:62.11
+  operating system:60.58
+  darknet:59.66
+  german:58.39
+
+Topic 8:
+  vendor:836.16
+  forum:395.50
+  private:341.07
+  ovdb:221.38
+  nightmare:173.27
+  hackers:162.80
+  hacker:143.63
+  pirate market:131.04
+  item:126.56
+  sandoz labs:116.35
+  step:102.69
+  socks proxy:101.92
+  knowledge:99.71
+  derjo derjo:90.09
+  security:80.80
+  righteous:76.23
+  community:72.56
+  dropped:65.15
+  stock:65.12
+  front:62.28
+
+Topic 9:
+  market:1651.67
+  buyer:589.20
+  multisig:501.88
+  markets:500.45
+  escrow:240.03
+  seller:218.28
+  accounts:210.68
+  exit node:209.86
+  buyer seller:208.17
+  ross:198.16
+  bazaar:180.76
+  invite:168.96
+  trust:159.47
+  products:156.86
+  allowed yesvendor bond:156.61
+  order:156.15
+  prior security flaws:143.55
+  vendor:140.40
+  funds:133.85
+  escrow system:133.42
+
+Topic 10:
+  intel:314.65
+  firmware:240.53
+  nash:163.11
+  mtgox:143.38
+  extradition:138.61
+  libreboot:97.87
+  images:95.11
+  flash:93.47
+  gifs:91.30
+  ssbd:90.10
+  core:85.57
+  vincenzetti:82.79
+  silk road:78.77
+  proprietary:78.30
+  application:71.76
+  hardware:70.82
+  offence:69.30
+  conduct:55.44
+  indictment:55.44
+  italian:55.07
+
+Topic 11:
+  alice:234.75
+  arbitrator:216.46
+  service:213.21
+  transaction:146.73
+  bitrated:137.03
+  ccrypt:124.60
+  client side:120.25
+  payment:118.88
+  vacation mode:113.56
+  mullvad:105.90
+  exploit:99.73
+  local:95.66
+  trent:91.35
+  symmetric:89.67
+  bitlaundry:78.20
+  party:77.70
+  multisig:77.33
+  fees:72.26
+  webrtc:71.66
+  blond wigs:69.33
+
+Topic 12:
+  quantum:200.24
+  litecoin:151.81
+  diagrams:145.55
+  particles:131.69
+  theory:131.69
+  scattering:110.89
+  particle:110.89
+  buyers:107.05
+  mannion:103.95
+  gravity:97.03
+  feynman:97.03
+  space time:87.39
+  drug:86.97
+  unitarity:76.24
+  object:69.31
+  amplitude:69.31
+  arkani:69.31
+  color system:68.18
+  field:63.42
+  geometric:62.38
+
+Topic 13:
+  encryption:695.37
+  data:498.36
+  gchq:356.35
+  gemalto:332.69
+  hacking team:314.81
+  security:311.74
+  company:266.49
+  secure:249.31
+  phone:244.15
+  agency:230.60
+  agencies:215.52
+  laptop:209.95
+  companies:203.11
+  encryption keys:193.88
+  network:190.26
+  bill:182.16
+  secret:177.74
+  program:173.02
+  wireless:166.34
+  keys:164.36
+
+Topic 14:
+  protonmail:274.40
+  machine:204.33
+  reply:131.67
+  shred:110.48
+  signing:103.79
+  admin:91.28
+  math:78.20
+  secure:43.75
+  internet access:43.32
+  dictionary:41.38
+  edward snowden:41.07
+  ddos attack:37.02
+  criminals:30.91
+  remove:29.08
+  gateway:22.38
+  simply:19.88
+  high level:12.93
+  free software:10.20
+  black market:5.90
+  secret keys:4.55
+
+Topic 15:
+  gnupg:519.78
+  privacy:383.28
+  link:349.05
+  goals:214.86
+  myname:180.71
+  keys:166.48
+  control:151.25
+  personal:149.71
+  individuals:138.62
+  rules:133.18
+  social:117.73
+  data:114.08
+  individual:112.27
+  protection:104.33
+  general:92.84
+  peter:90.05
+  case:84.73
+  goal:83.17
+  forms:83.17
+  subject:83.17
+
+Topic 16:
+  bitcoin:1423.37
+  people:1168.10
+  project:327.58
+  release:319.77
+  decred:313.22
+  btcd:313.22
+  signature:241.97
+  coins:217.33
+  package:215.89
+  public block:213.81
+  voice:194.06
+  drugs:189.68
+  development:182.71
+  airdrop:182.71
+  developers:169.66
+  speech:159.41
+  btcsuite:143.56
+  features:138.10
+  upgrade:137.77
+  system:135.87
+
+Topic 17:
+  gass:110.88
+  identity:92.59
+  seeds:90.07
+  registry:84.79
+  sachs:76.22
+  havege:69.27
+  sheet:65.12
+  license:62.36
+  encrypt data:61.02
+  fraud:50.25
+  kuwait:48.43
+  john:41.57
+  licenses:41.57
+  fluid:41.55
+  generators:41.55
+  volatile:41.55
+  state:38.33
+  random number:36.32
+  bunce:34.64
+  driver:34.64
+
+Topic 18:
+  cable:124.75
+  bitcoin wallet:124.19
+  apple market:110.67
+  covert:103.96
+  vendor accounts:84.26
+  wallets:81.84
+  cross:76.23
+  southern:76.23
+  privacy:74.17
+  central escrow:68.52
+  defcon:66.95
+  network:64.56
+  obpp:62.37
+  armory:62.37
+  operational:62.37
+  ranvier:55.44
+  cover:55.44
+  vlad:55.37
+  agent:48.93
+  darkwallet:48.51
+
+Topic 19:
+  file:749.60
+  files:654.68
+  xkeyscore:554.65
+  message:313.12
+  click:293.25
+  password:262.10
+  truecrypt:233.57
+  email address:225.13
+  computer:220.58
+  store:188.47
+  traffic:169.25
+  data:153.02
+  send:149.96
+  hidden volume:149.67
+  shrem:145.50
+  volume:144.38
+  encrypted message:141.89
+  analysts:137.09
+  stack:131.66
+  textedit:130.50
+
+Topic 20:
+  uptime:609.88
+  medium:208.81
+  culture:149.88
+  referral link required:144.13
+  jars:117.45
+  tube:117.45
+  pressure:117.45
+  test:112.25
+  circuits:105.91
+  cooker:104.40
+  plastic:91.35
+  mycelium:91.35
+  production:91.35
+  pump:91.35
+  quart:91.35
+  astoria:89.96
+  filter:78.30
+  liquid:78.30
+  male:78.30
+  sterilize:78.30
+
+Topic 21:
+  system:703.00
+  bridges:407.35
+  network:381.58
+  shadow:287.10
+  string:149.25
+  crash:137.18
+  false:130.46
+  time:127.33
+  free:111.56
+  koch:104.13
+  casino:97.03
+  onion:96.06
+  directory:95.42
+  definition:91.32
+  nohl:89.75
+  safe mail:88.66
+  challenge:83.14
+  bridge:82.45
+  true:71.72
+  scheme:71.71
+
+Topic 22:
+  clearnet:260.82
+  javascript:229.84
+  marketplace:224.88
+  forums:188.77
+  tumble coins:104.18
+  alphabay:97.58
+  sample:85.47
+  mitm:84.78
+  clearnet wallet:79.11
+  openssl:65.52
+  phishing:59.46
+  writing:46.76
+  phishing links:44.06
+  phishing sites:43.34
+  link love avengers:37.18
+  library:34.64
+  programming:34.56
+  feedbacks:34.53
+  task:34.35
+  passage:34.30
+
+Topic 23:
+  agora:696.08
+  sites:256.96
+  escrow:185.68
+  feedback:183.14
+  offer:150.07
+  metadata:138.84
+  shared coin:135.51
+  site:132.65
+  special characters:128.14
+  scammers:124.67
+  deep:120.39
+  deal:97.87
+  australian:90.08
+  bits:85.67
+  hidden wiki:85.27
+  remember:85.20
+  congress:83.16
+  time:78.28
+  bits entropy:72.29
+  shipping:71.71
+
+Topic 24:
+  qubes:233.19
+  boot:116.68
+  partition:95.72
+  drive:85.34
+  persistent volume:81.48
+  flash drive:77.96
+  proxychains:77.83
+  hidden:68.20
+  container:55.41
+  cold storage:50.24
+  public private:47.04
+  pass:41.49
+  pritel:41.48
+  science:41.45
+  tails:40.24
+  deposit:39.49
+  geli:34.59
+  diskcryptor:34.54
+  porn:34.53
+  child:34.53
+
+Topic 25:
+  police:258.84
+  malware:146.20
+  lawyer:136.35
+  undercover:131.69
+  dark:124.48
+  french:123.80
+  update:121.16
+  suspect:110.89
+  gmail account:104.84
+  bugs:99.71
+  circuit:97.03
+  dino:90.09
+  default:89.64
+  court:87.34
+  luks:84.76
+  hart:83.17
+  case:82.11
+  browser:81.92
+  disable:80.05
+  disable javascript:79.10
+
+Topic 26:
+  wallet:1301.01
+  electrum:831.14
+  address:728.61
+  transaction:550.42
+  keys:423.22
+  order:392.56
+  public:372.38
+  market:306.66
+  public keys:288.94
+  share:254.45
+  correct:227.09
+  seed:194.96
+  fitlet:194.05
+  verify:187.04
+  paste:182.59
+  host:179.53
+  select:171.34
+  customer:163.82
+  receive:163.29
+  copy:159.53
+
+Topic 27:
+  nucleus:368.88
+  cops:215.82
+  notice:202.23
+  clients:154.83
+  blockchain:148.39
+  client:147.23
+  deposit address:140.67
+  send coins:125.89
+  traffic:114.00
+  relays:102.00
+  private:100.50
+  balance:84.09
+  phisher:78.29
+  link:75.09
+  prevent:74.83
+  blockchain info:73.28
+  phishing:72.80
+  phishing link:72.10
+  network:70.69
+  coins:67.79
+
+Topic 28:
+  site:869.23
+  systems:402.55
+  bitmessage:329.94
+  carriers:247.38
+  data:243.16
+  document:230.42
+  doge:228.71
+  cellular:220.86
+  whatsapp:214.86
+  post:214.70
+  location:204.60
+  researchers:195.84
+  tracking:195.07
+  technology:184.49
+  calls:170.65
+  services:169.18
+  mccoole:163.12
+  engel:160.70
+  security:159.59
+  agencies:158.23
+
+Topic 29:
+  middle earth:383.85
+  exit scam:229.89
+  cold storage:221.03
+  evolution:209.99
+  private keys:195.47
+  code select:170.81
+  potential:168.20
+  market share:128.25
+  offline wallet:124.71
+  monero:110.88
+  command:102.25
+  invite link join uptime:101.91
+  actual:99.78
+  expunged:97.02
+  masternodes:97.02
+  online wallet:96.28
+  output:90.72
+  agora:90.08
+  computer:89.43
+  repaid:77.85
+
+Topic 30:
+  click:846.82
+  enter:426.69
+  select:399.86
+  whonix:324.45
+  file:322.81
+  xubuntu:277.24
+  desktop:276.73
+  stick:270.31
+  tails:264.19
+  window:261.62
+  chapter:236.84
+  create:229.61
+  button:208.85
+  install:180.12
+  download:170.50
+  icon:169.61
+  folder:167.77
+  optional:156.61
+  close:155.88
+  whonix gateway:155.81
+
+Topic 31:
+  passphrase:412.33
+  truecrypt:188.47
+  diceware:185.36
+  wipe:163.04
+  random:159.66
+  dice:144.29
+  passphrases:138.61
+  huskins:131.69
+  muller:117.82
+  quinn:117.82
+  bitchain:111.19
+  word:106.83
+  police:84.99
+  abduction:76.24
+  word passphrase:75.20
+  island:69.31
+  march:68.11
+  word list:67.56
+  average:65.16
+  guess:64.42
+
+Topic 32:
+  microphones:216.45
+  clock:186.33
+  cannabis:104.85
+  multiple:86.47
+  drugs:83.14
+  facial:62.29
+  organised:55.44
+  cocaine:55.44
+  disable:54.44
+  recognition:51.35
+  crime:49.65
+  heroin:46.18
+  criminals:43.81
+  gchq:42.81
+  cutting:41.58
+  unit:41.58
+  europe:41.58
+  drop:41.53
+  mailtor:41.31
+  updates:38.92
+
+Topic 33:
+  love avengers:333.39
+  escrow:207.27
+  wickr:205.03
+  signal:156.39
+  feature:109.54
+  writeprints:78.36
+  open source:75.93
+  features:69.49
+  mytext:65.16
+  original:65.16
+  wallet seed:61.78
+  countries:57.15
+  multi signature:51.76
+  electrum wallet:50.52
+  approach:48.11
+  master public:45.49
+  existing:41.44
+  screen:37.96
+  publishes:34.57
+  listing:34.53
+
+Topic 34:
+  mail:454.28
+  email:266.43
+  addresses:158.76
+  valhalla:151.51
+  socks:137.14
+  turbodoctor:126.26
+  port:122.73
+  onion address:118.93
+  proxy:107.65
+  email service:105.80
+  free:91.18
+  anonfiles:84.62
+  sorting:69.30
+  country:68.76
+  darkcoin:64.68
+  lelantos mail:58.65
+  paper:52.17
+  sorted:48.51
+  game:48.48
+  servers:46.73
+
+Topic 35:
+  passages:129.95
+  blister:110.87
+  torvm:91.29
+  imitation:84.58
+  mccarthy:64.75
+  ccffef:62.36
+  edbfb:62.36
+  fbab:62.36
+  faiella:60.20
+  tabs:42.67
+  bitcoind:41.58
+  txid:41.56
+  torrc:41.48
+  hypervisor:34.68
+  bbed:34.63
+  silk:34.43
+  interface:32.45
+  management:30.32
+  approach:29.52
+  methods:29.40
+
+Topic 36:
+  tails:890.80
+  update:331.06
+  browser:194.01
+  grams:193.31
+  privoxy:131.68
+  problem:120.03
+  helix:117.41
+  payment system:86.40
+  network:80.64
+  browsing:68.54
+  support:63.55
+  wallet address:61.51
+  tails tails:58.00
+  localhost:55.44
+  feel free:52.95
+  port:46.08
+  forward:41.58
+  absolem:41.48
+  proxy:39.45
+  encrypted:38.70
+
+Topic 37:
+  government:187.21
+  blockchain analysis:116.35
+  weight:103.95
+  records:91.29
+  remote server:84.75
+  mcgday:83.16
+  withdraw funds:74.76
+  patriot:69.31
+  program:64.47
+  business:58.68
+  powers:55.44
+  heroin:51.66
+  fisa:48.51
+  phone:48.21
+  venders:47.35
+  collection:46.89
+  bulk:43.59
+  water:43.57
+  major:43.46
+  including:41.90
+
+Topic 38:
+  software:527.19
+  vodafone:214.35
+  security:168.74
+  people:150.11
+  rogue:145.55
+  logs:143.37
+  horrible opsec:124.85
+  athens:124.76
+  greek:110.89
+  data:102.91
+  huge deal:102.13
+  clandestine:97.03
+  phone:95.07
+  network:80.79
+  time:74.75
+  code:73.50
+  call:72.29
+  wiretaps:71.79
+  affair:69.31
+  switch:67.69
+
+Topic 39:
+  hidden service:479.48
+  openssl:241.01
+  direct deals:134.21
+  nodes:124.19
+  relay:119.95
+  vulnerable:112.36
+  relays:107.42
+  traffic analysis:99.94
+  love avengers love avengers:72.14
+  exit:70.95
+  hidden services:69.58
+  buying bitcoins:58.01
+  identity:56.56
+  elliptic:55.44
+  wright:55.36
+  curve:52.13
+  clearnet site:52.00
+  hsdirs:48.47
+  politics:48.42
+  network traffic:47.66
+
+Topic 40:
+  enforcement:224.43
+  connect:214.49
+  hardware:204.16
+  wifi:163.23
+  evil twin:151.85
+  router:146.70
+  call:138.67
+  phone:138.27
+  cellular:128.41
+  cdrs:124.76
+  location:114.33
+  phones:111.02
+  base station:110.97
+  double click:107.80
+  double click false:103.95
+  warrant:101.56
+  hotspot:99.65
+  records:91.42
+  font:91.28
+  register:81.78
+
+Topic 41:
+  bios:376.09
+  purchase:162.15
+  bridge:101.47
+  lenovo:85.98
+  systemd:84.74
+  images:69.29
+  amagi:69.28
+  uefi:66.35
+  cash:66.28
+  lavabit:65.44
+  sign:59.98
+  cyprus:48.20
+  metals:41.55
+  compiling:41.52
+  currencies:39.16
+  accepting:34.62
+  fiat:34.62
+  purchased:34.61
+  writer:34.60
+  nasty:34.60
+
+Topic 42:
+  password:830.50
+  sites:517.96
+  entropy:508.82
+  passwords:371.38
+  bits entropy:302.93
+  word:246.90
+  character:201.00
+  hash:194.92
+  drugs:177.40
+  vpns:174.71
+  onion services:138.62
+  diceware:114.05
+  list:111.63
+  drug:110.46
+  bits:109.94
+  puts:103.96
+  chapter:99.97
+  secure:90.86
+  count:90.10
+  crime:89.06
+
+Topic 43:
+  love:282.57
+  breath:234.92
+  life:229.04
+  light:208.81
+  hashed subpkt:187.10
+  packet:177.58
+  human:149.74
+  earth:144.62
+  field:127.91
+  boolean:124.70
+  algo:117.44
+  bits:113.43
+  virtualpath:110.84
+  matrix:104.40
+  enter:98.52
+  planet:91.35
+  identity:82.81
+  gift:78.30
+  source:78.30
+  ceremony:78.30
+
+Topic 44:
+  coins:404.74
+  flax:391.51
+  microsoft:301.04
+  memory:220.09
+  recovery:215.61
+  bitlocker:131.69
+  windows:114.56
+  bytesize:110.89
+  women:110.88
+  disk encryption:110.23
+  void:103.96
+  null:97.03
+  encrypted:81.14
+  marriage:78.26
+  truecrypt:78.24
+  account:77.83
+  encryption:77.40
+  device:73.10
+  disk:69.11
+  backup:65.26
+
+Topic 45:
+  alford:332.68
+  cryptowall:235.65
+  authors:205.72
+  ulbricht:169.65
+  gold:152.09
+  price:144.24
+  silk road:140.52
+  ransomware:138.62
+  dropper:124.76
+  banks:118.49
+  malware:118.11
+  ramdisk:110.88
+  encrypted:109.34
+  stone:104.36
+  file:90.52
+  files:87.98
+  ross ulbricht:84.13
+  agents:82.08
+  threat:80.18
+  corpus:78.25
+
+Topic 46:
+  people:216.61
+  sages:189.40
+  called:187.59
+  virtue:126.49
+  great:124.39
+  good:123.07
+  death:104.40
+  tabs:100.74
+  stealth:99.23
+  heaven:98.58
+  sale:90.09
+  understand:86.47
+  hard drives:78.47
+  torchat:78.17
+  fault:72.09
+  state:66.86
+  bank transfer:66.84
+  soft:65.25
+  country:52.62
+  small:49.72
+
+Topic 47:
+  traffic:433.71
+  onion:348.77
+  abraxas:287.21
+  english:279.58
+  stylometry:238.98
+  global:192.53
+  root:182.81
+  requests:169.01
+  translation:143.45
+  writing style:142.41
+  slds:138.62
+  risk issues:122.27
+  website:113.22
+  adversarial:108.42
+  author:104.17
+  leakage:103.96
+  double negative:101.99
+  events:97.03
+  lion:93.40
+  dream market:91.81
+
+Topic 48:
+  anonymity:404.47
+  internet:328.61
+  bitcoins:303.98
+  acas:300.13
+  network:277.37
+  alice:206.88
+  party:200.34
+  bitcoin:191.28
+  attacks:168.93
+  coins:164.30
+  chain:147.08
+  darkcoin:144.12
+  computers:135.94
+  mixer:130.15
+  device:120.21
+  crack:119.52
+  level:112.65
+  radio:110.83
+  traffic:106.79
+  blocks:105.67
+
+Topic 49:
+  abraxas quantum delivery system:194.05
+  quantum delivery system:110.88
+  agora wallet:88.37
+  drive:74.51
+  data:67.38
+  erasing:62.35
+  erase:48.49
+  denvue:48.49
+  nail:48.49
+  coupon:48.49
+  read:44.38
+  bitcoins:43.58
+  agora:42.50
+  hard drive:41.87
+  formatting:41.56
+  family:41.55
+  digits:41.55
+  packets:41.40
+  drives:39.59
+  solid:34.63
+
+K: 50, Log-Likelihood: -1894587.037, Alpha: 2.000, Beta: 1.100

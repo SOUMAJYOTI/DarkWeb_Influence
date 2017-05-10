@@ -1,0 +1,441 @@
+Topic 0:
+  x x x x:7714.72
+  clean nothing found:1737.44
+  x x:1432.36
+  a:1431.01
+  x x x:1024.34
+  bhelp:1020.97
+  bro:972.79
+  and:963.58
+  d:725.10
+  to:654.91
+  the:634.56
+  c:600.27
+  it:569.81
+  b:546.10
+  you:543.01
+  xd:540.99
+  f:493.55
+  gold plat bus corp:479.42
+  x x c:458.95
+  i:455.40
+
+Topic 1:
+  onion uptime:2308.88
+  and:2273.20
+  the:1792.33
+  that:1150.45
+  to:1149.23
+  in:1059.11
+  or:925.97
+  for:877.30
+  of:801.46
+  a:794.20
+  with:721.18
+  is:712.55
+  it:688.30
+  com:685.98
+  idm:658.88
+  tor:643.94
+  as:608.82
+  on:607.05
+  but:605.51
+  you:579.38
+
+Topic 2:
+  and:2312.97
+  the:1911.68
+  to:1251.33
+  that:1243.18
+  of:1010.13
+  is:910.24
+  i p:909.23
+  a:906.41
+  for:877.01
+  thanks bro:872.39
+  it:862.05
+  or:824.27
+  in:823.29
+  but:779.14
+  you:775.83
+  this:716.13
+  on:669.64
+  i would like:648.40
+  with:593.14
+  so:587.31
+
+Topic 3:
+  and:2365.51
+  the:2273.90
+  to:1581.04
+  look at the:1575.69
+  is still working:1315.57
+  you:1308.91
+  that:1304.83
+  guide to read:1304.61
+  somebody else facebook messages:1300.57
+  below trick i posted:1300.57
+  dont beleieve me:1295.46
+  this is a simple:1294.35
+  table width tr td:1235.05
+  it:1225.07
+  is:1215.81
+  a:1197.50
+  hello friends this trick:1181.34
+  or:1081.93
+  this:1026.17
+  for:1024.31
+
+Topic 4:
+  and:2322.63
+  the:2080.63
+  to:1566.40
+  a:1318.43
+  that:1149.11
+  it:1118.14
+  is:1101.59
+  if:1075.92
+  or:1005.18
+  in:971.66
+  this:948.51
+  for:930.66
+  width height border:889.87
+  with:882.00
+  you:798.88
+  of:785.67
+  i:780.34
+  cryptolocker:769.64
+  gnupg:739.68
+  hidden content you must:672.44
+
+Topic 5:
+  and:4629.91
+  the:3415.02
+  to:2800.75
+  that:2259.87
+  or:2127.71
+  a:1861.89
+  you:1814.08
+  of:1677.98
+  in:1676.13
+  is:1607.17
+  by:1568.84
+  for:1560.87
+  it:1526.37
+  are:1431.76
+  on:1367.50
+  but:1246.85
+  as:1213.29
+  from:1212.19
+  this:1114.28
+  its:1071.84
+
+Topic 6:
+  request answer res content:1431.92
+  a f print results:1431.92
+  res b:1431.92
+  check n print joomla:1431.92
+  if answer:1414.32
+  print n error n:1404.39
+  host target:1349.31
+  n n else:1344.80
+  sql injection vulnerability:1299.00
+  index php option com:1287.40
+  component com:1266.70
+  from jos users com:1046.41
+  and:922.80
+  the:710.45
+  to:655.56
+  you:649.26
+  it:648.96
+  build fud silent:644.82
+  thank you for sharing:609.53
+  username x a password:578.28
+
+Topic 7:
+  td tr tr td:2495.33
+  target td td nmap:2230.50
+  and:1619.85
+  the:1050.50
+  thank:933.80
+  or:871.75
+  a:819.58
+  to:815.35
+  in:736.31
+  lets see:725.71
+  is vulnerable url:712.81
+  that:678.74
+  of:673.78
+  it:668.36
+  this:633.95
+  for:622.64
+  is:622.13
+  let me see:592.42
+  all:586.43
+  on:557.30
+
+Topic 8:
+  and:2748.46
+  the:2085.66
+  btc:1770.85
+  that:1349.26
+  to:1316.24
+  a:1179.03
+  or:1106.99
+  in:1105.26
+  of:1093.31
+  ltc:1006.91
+  you:1003.80
+  it:938.63
+  but:914.76
+  for:871.40
+  is:863.52
+  this:828.88
+  as:822.29
+  on:821.74
+  with:806.72
+  so:692.93
+
+Topic 9:
+  united states blacklist no:6659.64
+  checked at live:2947.34
+  yes checked at live:2076.72
+  and:1533.07
+  checked at live california:1304.76
+  the:1177.42
+  comcast net:1135.39
+  mexico blacklist no:1099.31
+  net united states blacklist:967.76
+  or:885.37
+  to:873.19
+  nuevo leon cablelink hosts:860.93
+  a:797.50
+  com united states blacklist:754.74
+  payment instantly perfectmoney bitcoin:708.97
+  wmtransfer btc e please:708.97
+  update tools client dichvusocks:708.97
+  click buy socks:708.97
+  us link check socks:708.97
+  net:708.74
+
+Topic 10:
+  and:3070.66
+  the:2747.94
+  to:2107.51
+  of:1764.75
+  or:1760.89
+  that:1675.87
+  for:1431.02
+  in:1378.82
+  a:1265.91
+  is:1252.36
+  it:1195.87
+  but:1093.19
+  with:1053.17
+  as:1026.20
+  this:924.37
+  you:916.15
+  was:895.26
+  from:871.13
+  one:860.32
+  on:859.10
+
+Topic 11:
+  and:3033.07
+  the:1880.81
+  to:1545.83
+  it:1316.73
+  that:1202.59
+  a:1136.65
+  or:1116.21
+  you:1044.13
+  for:937.12
+  but:885.15
+  is:883.84
+  in:870.77
+  of:854.79
+  on:792.70
+  this:769.54
+  thank you very much:751.32
+  now:738.41
+  with:670.57
+  all:661.81
+  just:632.13
+
+Topic 12:
+  hidden content you must:3546.13
+  reply to see links:3229.68
+  and:1549.24
+  commview for wifi:1164.48
+  the:1107.04
+  to:1058.91
+  thanks for sharing:883.15
+  you:655.86
+  a:632.46
+  this:622.32
+  on:573.46
+  it:568.44
+  for:565.02
+  that:532.72
+  is:528.71
+  in:514.75
+  or:504.28
+  anti:492.84
+  now:455.50
+  of:444.48
+
+Topic 13:
+  and:2072.42
+  the:1249.93
+  to:1220.17
+  that:964.02
+  or:914.27
+  a:881.33
+  for:843.90
+  is:812.32
+  of:792.99
+  you:751.52
+  in:735.11
+  crack wifi password in:730.72
+  tor:701.12
+  with:662.71
+  that you have recommended:614.15
+  from:595.02
+  if:579.10
+  but:575.00
+  this:551.49
+  it:543.23
+
+Topic 14:
+  member posts threads joined:2909.49
+  offline junior:1602.94
+  and:1322.35
+  the:1064.11
+  money donate am:996.40
+  money donate pm:904.81
+  to:868.88
+  is:792.46
+  a:786.01
+  that:679.47
+  you:677.83
+  this:675.32
+  it:666.01
+  mar reputation:640.02
+  but:587.96
+  for:559.03
+  thi:551.20
+  pm last post:540.50
+  free:530.20
+  yardlines yardlines yardlines yardlines:511.20
+
+Topic 15:
+  vn socks net live:3283.82
+  united states checked at:3059.60
+  and:1898.52
+  the:1597.34
+  to:1236.57
+  thank you:1129.75
+  it:818.38
+  for:806.03
+  that:786.12
+  of:739.09
+  i:736.67
+  as:721.77
+  you:704.49
+  thanks man:688.20
+  a:667.43
+  or:628.53
+  all:583.22
+  is:576.92
+  this:573.35
+  in:543.99
+
+Topic 16:
+  and:1583.42
+  i:1216.68
+  the:1016.21
+  if:968.06
+  that:852.44
+  system echo e m:833.07
+  to:827.50
+  file:774.90
+  a:759.41
+  is:686.59
+  it:657.28
+  post:655.50
+  in:655.08
+  you:653.22
+  or:649.07
+  for:637.16
+  on:592.86
+  with:547.14
+  get:545.49
+  this:540.50
+
+Topic 17:
+  the:1601.99
+  and:1457.37
+  to:1239.05
+  a:1166.94
+  is:892.79
+  if:772.63
+  that:751.35
+  or:749.37
+  for:721.52
+  do debug echo smtp:700.53
+  this:687.67
+  as:682.48
+  code:672.53
+  on:611.79
+  in:610.80
+  this error array error:605.87
+  php:604.93
+  smtp:602.81
+  i:593.88
+  it:585.94
+
+Topic 18:
+  ja:1918.60
+  and:1700.44
+  the:1194.50
+  on:1079.20
+  n:994.40
+  ett:948.39
+  a:947.01
+  that:911.23
+  to:887.37
+  y y y y:868.75
+  you:830.21
+  niin:780.05
+  jos:766.72
+  is:763.88
+  ei:748.01
+  for:733.13
+  br:731.21
+  mutta:706.15
+  it:700.62
+  in:641.56
+
+Topic 19:
+  lsd wtb q:3860.01
+  locale en us email:3840.27
+  timezone charset test:3840.27
+  default persistent:3030.75
+  example example com pass:1905.33
+  and:1076.67
+  the:993.45
+  of:916.67
+  to:731.99
+  i:641.86
+  a:586.50
+  or:571.38
+  xkeyscore:537.44
+  that:524.83
+  for:505.06
+  you:460.66
+  wor:456.12
+  it:439.81
+  thanx:434.93
+  but:417.72
+
+K: 20, Log-Likelihood: -119079752.976, Alpha: 1.100, Beta: 1.100
