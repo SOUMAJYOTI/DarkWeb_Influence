@@ -31,7 +31,7 @@ def getSentences(content):
     # Now filter some sentences which are actually not period aborted sentences
     new_sent_list = []
     for s in sent_list:
-        if len(s) < 10:
+        if len(s) < 5:
             continue
         new_sent_list.append(s.lstrip())
 

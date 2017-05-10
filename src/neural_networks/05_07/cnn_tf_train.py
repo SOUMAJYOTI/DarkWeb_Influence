@@ -71,7 +71,7 @@ print("Train/Dev split: {:d}/{:d}".format(len(y_train), len(y_dev)))
 x_train = x_train[:, :50]
 x_dev = x_dev[:, :50]
 
-print(x_dev)
+print(y_dev)
 exit()
 
 

@@ -130,10 +130,6 @@ def getCorpusPosts(fPosts, timecheck=True):
     return (mdocs, mdocs_indexed)
 
 
-def getsentenceSplits(sent):
-    for idx_s in range(len(sent)):
-        s = sent[idx_s]
-
 if __name__ == "__main__":
     for idx in range(1, 11):
         print(idx)
