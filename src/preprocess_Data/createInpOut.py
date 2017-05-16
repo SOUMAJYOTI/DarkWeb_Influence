@@ -173,13 +173,13 @@ def createInpOutMatrix(sent, w2v_feat):
             else:
                 context_input.append(np.random.uniform(-0.25, 0.25, (50)))
 
-        # Sentences should be of length 15
-        if len(context_input) < 15:
+        # Sentences should be of length 10
+        if len(context_input) < 10:
             len_cur = len(context_input)
-            for idx_fill in range(15 - len_cur):
+            for idx_fill in range(10 - len_cur):
                 context_input.append(np.random.uniform(-0.25, 0.25, (50)))
         else:
-            context_input = context_input[:15]
+            context_input = context_input[:10]
 
         contextInpMatrix.append(context_input)
 
@@ -248,13 +248,13 @@ def createInpOutMatrix(sent, w2v_feat):
             sum = np.random.uniform(-0.25, 0.25, (50))  # Sample from uniform distribution
             context_output.append(sum)
 
-        # Sentences should be of length 15
-        if len(context_output) < 15:
+        # Sentences should be of length 10
+        if len(context_output) < 10:
             len_cur = len(context_output)
-            for idx_fill in range(15-len_cur):
+            for idx_fill in range(10-len_cur):
                 context_output.append(np.random.uniform(-0.25, 0.25, (50)))
         else:
-            context_output = context_output[:15]
+            context_output = context_output[:10]
 
         # print(np.array(context_sentence).shape)
         contextOutMatrix.append(context_output)
@@ -267,7 +267,7 @@ def createInpOutMatrix(sent, w2v_feat):
 if __name__ == "__main__":
     stopwords_file = open('../../darkweb_data/Stop_Words.txt', 'r')
     stopwords = getStopWords(stopwords_file)
-    w2v_feat = pickle.load(open('../../darkweb_data/5_10/word2vec_train_vocab_d50_min2.pickle', 'rb'))
+    w2v_feat = pickle.load(open('../../darkweb_data/5_10/word2vec_train_model_d50_min2.pickle', 'rb'))
 
     # sentences_all = []
     # for idx in range(1, 11):

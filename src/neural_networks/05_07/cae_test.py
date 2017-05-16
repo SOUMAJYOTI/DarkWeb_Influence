@@ -5,11 +5,15 @@ from libs.activations import lrelu
 from libs.utils import corrupt
 import pickle
 
+
+# Use some sort of unsupervised deconvolution feature for the final neural network
+# Instead of the convolution feature, use the second decoding model for the convolved layer
+
 # Much of the code has been used from Parag Mittal
 # %%
-def autoencoder(input_shape=[None, 15, 50, 1],
-                n_filters=[1, 10, 10, 10],
-                filter_sizes=[3, 3, 3, 3],
+def autoencoder(input_shape=[None, 10, 50, 1],
+                n_filters=[1, 10],
+                filter_sizes=[3, 3],
                 corruption=False):
     """Build a deep autoencoder w/ tied weights.
 
@@ -59,6 +63,7 @@ def autoencoder(input_shape=[None, 15, 50, 1],
     # Build the encoder
     encoder = []
     shapes = []
+    conv_layer = []
     # n_input --> number of layers
     # n_output --> number of layers
     for layer_i, n_output in enumerate(n_filters[1:]):
@@ -67,15 +72,15 @@ def autoencoder(input_shape=[None, 15, 50, 1],
         W = tf.Variable(
             tf.random_uniform([
                 filter_sizes[layer_i],
-                50, #filter_sizes[layer_i],
+                50,
                 n_input, n_output],
                 -1.0 / math.sqrt(n_input),
                 1.0 / math.sqrt(n_input)))
         b = tf.Variable(tf.zeros([n_output]))
         encoder.append(W)
-        output = lrelu(
-            tf.add(tf.nn.conv2d(
-                current_input, W, strides=[1, 2, 2, 1], padding='SAME'), b))
+        conv_layer.append(tf.nn.conv2d(
+                current_input, W, strides=[1, 1, 1, 1], padding='VALID', name='encoder'))
+        output = lrelu(tf.add(conv_layer[layer_i], b))
         current_input = output
 
     # %%
@@ -93,7 +98,7 @@ def autoencoder(input_shape=[None, 15, 50, 1],
             tf.nn.conv2d_transpose(
                 current_input, W,
                 tf.stack([tf.shape(x)[0], shape[1], shape[2], shape[3]]),
-                strides=[1, 2, 2, 1], padding='SAME'), b))
+                strides=[1, 1, 1, 1], padding='VALID', name='decoder'), b))
         current_input = output
 
     # %%
@@ -103,7 +108,7 @@ def autoencoder(input_shape=[None, 15, 50, 1],
     cost = tf.reduce_sum(tf.square(y - y_out))
 
     # %%
-    return {'x': x, 'z': z, 'y': y_out, 'cost': cost}
+    return {'x': x, 'z': z, 'y': y_out, 'conv': conv_layer, 'cost': cost}
 
 
 # %%
@@ -114,7 +119,7 @@ def test_convVAE():
 
     ae = autoencoder()
 
-    # %%
+    # # %%
     learning_rate = 0.01
     optimizer = tf.train.AdamOptimizer(learning_rate).minimize(ae['cost'])
 
@@ -123,9 +128,11 @@ def test_convVAE():
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     sess = tf.Session(config=config)
+    saver = tf.train.Saver()
+    #
     sess.run(tf.global_variables_initializer())
 
-    batch_size = 100
+    batch_size = 16
     # Create the batches of the data
     num_train_data = InpMatrix.shape[0]
     # num_train_data = 1000
@@ -133,11 +140,23 @@ def test_convVAE():
     # Fit all training data
     n_epochs = 100
     for epoch_i in range(n_epochs):
+        # Shuffle the training data over the epochs
+        shuffle_indices = np.random.permutation(np.arange(num_train_data))
+        InpMatrix = InpMatrix[shuffle_indices]
         for idx in range(num_train_data // batch_size):
             batch_xs_in = InpMatrix[idx * batch_size: (idx + 1) * batch_size]
             batch_xs_out = OutMatrix[idx * batch_size: (idx + 1) * batch_size]
-            sess.run(optimizer, feed_dict={ae['x']: batch_xs_in, ae['y']: batch_xs_out})
+            _, conv_layer = sess.run([optimizer, ae['conv']], feed_dict={ae['x']: batch_xs_in, ae['y']: batch_xs_out})
         print(epoch_i, sess.run(ae['cost'], feed_dict={ae['x']: batch_xs_in, ae['y']: batch_xs_out}))
+    # saver.save(sess, "tmp/model")
+
+    pickle.dump(conv_layer, open('conv_layer.pickle', 'wb'))
+
+    # Restore the pretrained layers
+    # saver = tf.train.import_meta_graph('tmp/model.meta')
+    # saver.restore(sess, tf.train.latest_checkpoint('tmp/'))
+    # conv_out = sess.run(ae['conv'], feed_dict={ae['x']: InpMatrix, ae['y']: OutMatrix})
+    # print(tf.shape(conv_out))
 
 
 if __name__ == '__main__':
