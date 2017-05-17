@@ -13,24 +13,25 @@ class TextCNN(object):
       embedding_size, filter_sizes, num_filters, l2_reg_lambda=0.0):
 
         # Placeholders for input, output and dropout
-        self.input_x = tf.placeholder(tf.int32, [None, sequence_length], name="input_x")
+        # self.input_x = tf.placeholder(tf.int32, [None, sequence_length], name="input_x")
         self.input_y = tf.placeholder(tf.float32, [None, num_classes], name="input_y")
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob")
         # Add a pretrained convolution layer - from the autoencoder
-        # self.custom_units = tf.placeholder(tf.float32, shape=[None, 8, 1, 10], name='pretrainConv')
-        # self.custom_units = tf.Variable(
-        #         tf.random_uniform(self.input_x.get_shape().as_list(), -1.0, 1.0),
-        #         name="pretrainconv")
+        self.custom_units = tf.placeholder(tf.float32, shape=[None, 28, 1, 10], name='pretrainConv')
+        self.custom_W = tf.placeholder(tf.float32, shape=[None, 50, 1, 10], name='pretrainFilter')
 
         # Keeping track of l2 regularization loss (optional)
         l2_loss = tf.constant(0.0)
 
         # Embedding layer
         with tf.name_scope("embedding"):
-            self.W = tf.Variable(
-                tf.random_uniform([vocab_size, embedding_size], -1.0, 1.0),
-                name="W")
-            self.embedded_chars = tf.nn.embedding_lookup(self.W, self.input_x)
+            # self.W = tf.Variable(
+            #     tf.random_uniform([vocab_size, embedding_size], -1.0, 1.0),
+            #     name="W")
+            # self.embedded_chars = tf.nn.embedding_lookup(self.W, self.input_x)
+            # self.embedded_chars_expanded = tf.expand_dims(self.embedded_chars, -1)
+
+            self.embedded_chars = tf.placeholder(tf.float32, shape=[None, 30, 50], name='preTrainedW2V')
             self.embedded_chars_expanded = tf.expand_dims(self.embedded_chars, -1)
 
         # Create a convolution + maxpool layer for each filter size
@@ -48,17 +49,18 @@ class TextCNN(object):
                     padding="VALID",
                     name="conv")
 
-                # print(tf.shape(custom_units))
-                # custom_units = tf.nn.conv2d(
-                #     self.embedded_chars_expanded,
-                #     W,
-                #     strides=[1, 1, 1, 1],
-                #     padding="VALID",
-                #     name="conv")
-
-                # merge_layer = tf.add_n([conv_l, self.custom_units], name="merge")
+                # Concat the supervised and unsupervised CNN layers
+                # merge_layer = tf.concat(3, [conv_l, self.custom_units])
+                conv_custom = tf.nn.conv2d(
+                    self.embedded_chars_expanded,
+                    self.custom_W,
+                    strides=[1, 1, 1, 1],
+                    padding='VALID',
+                    name='preTrainConv'
+                )
+                merge_layer = tf.add_n([conv_l, conv_custom], name='merge')
                 # Apply nonlinearity
-                h = tf.nn.relu(tf.nn.bias_add(conv_l, b), name="relu")
+                h = tf.nn.relu(tf.nn.bias_add(merge_layer, b), name="relu")
                 # Maxpooling over the outputs
                 pooled = tf.nn.max_pool(
                     h,
@@ -77,6 +79,7 @@ class TextCNN(object):
         with tf.name_scope("dropout"):
             self.h_drop = tf.nn.dropout(self.h_pool_flat, self.dropout_keep_prob)
 
+        # TODO: check the concatenation operator before
         # Final (unnormalized) scores and predictions
         with tf.name_scope("output"):
             W = tf.get_variable(

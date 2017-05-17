@@ -189,6 +189,5 @@ def main():
             pickle.dump(vocab_dict, open('../../darkweb_data/5_10/data/vocab_dict.pickle', 'wb'))
 
 
-
 if __name__ == "__main__":
     main()

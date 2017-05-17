@@ -12,8 +12,8 @@ import pickle
 # Much of the code has been used from Parag Mittal
 # %%
 def autoencoder(input_shape=[None, 30, 50, 1],
-                n_filters=[1, 10],
-                filter_sizes=[3, 3],
+                n_filters=[1, 10, 10],
+                filter_sizes=[3, 3, 3],
                 corruption=False):
     """Build a deep autoencoder w/ tied weights.
 
@@ -72,7 +72,6 @@ def autoencoder(input_shape=[None, 30, 50, 1],
         W = tf.Variable(
             tf.random_uniform([
                 filter_sizes[layer_i],
-                50,
                 n_input, n_output],
                 -1.0 / math.sqrt(n_input),
                 1.0 / math.sqrt(n_input)))
@@ -108,7 +107,7 @@ def autoencoder(input_shape=[None, 30, 50, 1],
     cost = tf.reduce_sum(tf.square(y - y_out))
 
     # %%
-    return {'x': x, 'z': z, 'y': y_out, 'conv': conv_layer, 'cost': cost}
+    return {'x': x, 'z': z, 'y': y_out, 'conv': conv_layer, 'encoder': encoder, 'cost': cost}
 
 
 # %%
@@ -117,6 +116,7 @@ def test_convVAE():
     InpMatrix = np.reshape(InpMatrix, (InpMatrix.shape[0], InpMatrix.shape[1], InpMatrix.shape[2], 1))
     OutMatrix = np.reshape(OutMatrix, (OutMatrix.shape[0], OutMatrix.shape[1], OutMatrix.shape[2], 1))
 
+    print(InpMatrix.shape)
     ae = autoencoder()
 
     # # %%
@@ -146,11 +146,13 @@ def test_convVAE():
         for idx in range(num_train_data // batch_size):
             batch_xs_in = InpMatrix[idx * batch_size: (idx + 1) * batch_size]
             batch_xs_out = OutMatrix[idx * batch_size: (idx + 1) * batch_size]
-            _, conv_layer = sess.run([optimizer, ae['conv']], feed_dict={ae['x']: batch_xs_in, ae['y']: batch_xs_out})
+            _, conv_layer, encoder = sess.run([optimizer, ae['conv'], ae['encoder']], feed_dict={ae['x']: batch_xs_in, ae['y']: batch_xs_out})
         print(epoch_i, sess.run(ae['cost'], feed_dict={ae['x']: batch_xs_in, ae['y']: batch_xs_out}))
     # saver.save(sess, "tmp/model")
 
-    pickle.dump(conv_layer, open('../../../darkweb_data/5_15/conv_layer.pickle', 'wb'))
+    print(np.array(encoder[0]).shape)
+    # pickle.dump(encoder[0], open('../../../darkweb_data/5_15/filter_weights_10_fil2.pickle', 'wb'))
+    # pickle.dump(encoder, open('../../../darkweb_data/5_15/conv_layer.pickle', 'wb'))
 
     # Restore the pretrained layers
     # saver = tf.train.import_meta_graph('tmp/model.meta')
