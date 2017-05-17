@@ -54,7 +54,7 @@ vocab_dict = pickle.load(open('../../../darkweb_data/5_15/data/vocab_dict_revise
 conv_layer = pickle.load(open('../../../darkweb_data/5_15/conv_layer.pickle', 'rb'))
 conv_out = conv_layer[0] # for now consider the first layer
 
-filter_weights= pickle.load(open('../../../darkweb_data/5_15/filter_weights_10.pickle', 'rb'))
+filter_weights= pickle.load(open('../../../darkweb_data/5_15/filter_weights_10_stacked.pickle', 'rb'))
 
 num_folds = 5
 num_cols = 10
@@ -123,7 +123,8 @@ for idx_fold in range(num_folds):
                   cnn.embedded_chars: x_batch,
                   cnn.input_y: y_batch,
                   cnn.custom_units: conv_out,
-                  cnn.custom_W: filter_weights,
+                  cnn.custom_W_1: filter_weights[1],
+                  cnn.custom_W_2: filter_weights[0],
                   cnn.dropout_keep_prob: FLAGS.dropout_keep_prob
                 }
                 _, step, loss, accuracy, pred = sess.run(
@@ -145,7 +146,8 @@ for idx_fold in range(num_folds):
                   cnn.embedded_chars: x_batch,
                   cnn.input_y: y_batch,
                   cnn.custom_units: conv_out,
-                  cnn.custom_W: filter_weights,
+                  cnn.custom_W_1: filter_weights[1],
+                  cnn.custom_W_2: filter_weights[0],
                   cnn.dropout_keep_prob: 1.0
                 }
                 step, loss, accuracy, pred = sess.run(

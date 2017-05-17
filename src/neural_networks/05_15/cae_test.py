@@ -12,8 +12,8 @@ import pickle
 # Much of the code has been used from Parag Mittal
 # %%
 def autoencoder(input_shape=[None, 30, 50, 1],
-                n_filters=[1, 10, 10],
-                filter_sizes=[3, 3, 3],
+                n_filters=[1, 10],
+                filter_sizes=[3, 3],
                 corruption=False):
     """Build a deep autoencoder w/ tied weights.
 
@@ -67,19 +67,43 @@ def autoencoder(input_shape=[None, 30, 50, 1],
     # n_input --> number of layers
     # n_output --> number of layers
     for layer_i, n_output in enumerate(n_filters[1:]):
-        n_input = current_input.get_shape().as_list()[3]
+        n_input = current_input.get_shape().as_list()[3] # number of channels of the input ---> 3 for image, 1 for text
         shapes.append(current_input.get_shape().as_list())
+        print(shapes)
         W = tf.Variable(
             tf.random_uniform([
                 filter_sizes[layer_i],
+                50,
+                n_input, n_output],
+                -1.0 / math.sqrt(n_input),
+                1.0 / math.sqrt(n_input)))
+        # print(W.get_shape())
+
+        b = tf.Variable(tf.zeros([n_output]))
+        encoder.append(W)
+        c_l = tf.nn.conv2d(
+                current_input, W, strides=[1, 1, 1, 1], padding='VALID', name='encoder')
+        conv_layer.append(c_l)
+        output = lrelu(tf.add(conv_layer[layer_i], b))
+        # print(c_l.get_shape())
+
+        n_input = c_l.get_shape().as_list()[3]
+        shapes.append(output.get_shape().as_list())
+        W_2 = tf.Variable(
+            tf.random_uniform([
+                filter_sizes[layer_i],
+                1,
                 n_input, n_output],
                 -1.0 / math.sqrt(n_input),
                 1.0 / math.sqrt(n_input)))
         b = tf.Variable(tf.zeros([n_output]))
-        encoder.append(W)
-        conv_layer.append(tf.nn.conv2d(
-                current_input, W, strides=[1, 1, 1, 1], padding='VALID', name='encoder'))
-        output = lrelu(tf.add(conv_layer[layer_i], b))
+        encoder.append(W_2)
+        c_l = tf.nn.conv2d(
+            output, W_2, strides=[1, 1, 1, 1], padding='VALID', name='encoder')
+        conv_layer.append(c_l)
+        # print(W_2.get_shape())
+        output = lrelu(tf.add(conv_layer[layer_i+1], b))
+
         current_input = output
 
     # %%
@@ -151,7 +175,8 @@ def test_convVAE():
     # saver.save(sess, "tmp/model")
 
     print(np.array(encoder[0]).shape)
-    # pickle.dump(encoder[0], open('../../../darkweb_data/5_15/filter_weights_10_fil2.pickle', 'wb'))
+    print(np.array(encoder[1]).shape)
+    pickle.dump(encoder, open('../../../darkweb_data/5_15/filter_weights_10_stacked.pickle', 'wb'))
     # pickle.dump(encoder, open('../../../darkweb_data/5_15/conv_layer.pickle', 'wb'))
 
     # Restore the pretrained layers

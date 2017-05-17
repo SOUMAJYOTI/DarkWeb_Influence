@@ -4,10 +4,6 @@ import sklearn.metrics
 
 
 class TextCNN(object):
-    """
-    A CNN for text classification.
-    Uses an embedding layer, followed by a convolutional, max-pooling and softmax layer.
-    """
     def __init__(
       self, sequence_length, num_classes, vocab_size,
       embedding_size, filter_sizes, num_filters, l2_reg_lambda=0.0):
@@ -18,7 +14,8 @@ class TextCNN(object):
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob")
         # Add a pretrained convolution layer - from the autoencoder
         self.custom_units = tf.placeholder(tf.float32, shape=[None, 28, 1, 10], name='pretrainConv')
-        self.custom_W = tf.placeholder(tf.float32, shape=[None, 50, 1, 10], name='pretrainFilter')
+        self.custom_W_1 = tf.placeholder(tf.float32, shape=[None, 50, 1, 10], name='pretrainFilter')
+        self.custom_W_2 = tf.placeholder(tf.float32, shape=[None, 1, 10, 10], name='pretrainFilter')
 
         # Keeping track of l2 regularization loss (optional)
         l2_loss = tf.constant(0.0)
@@ -53,7 +50,7 @@ class TextCNN(object):
                 # merge_layer = tf.concat(3, [conv_l, self.custom_units])
                 conv_custom = tf.nn.conv2d(
                     self.embedded_chars_expanded,
-                    self.custom_W,
+                    self.custom_W_1,
                     strides=[1, 1, 1, 1],
                     padding='VALID',
                     name='preTrainConv'
@@ -61,10 +58,34 @@ class TextCNN(object):
                 merge_layer = tf.add_n([conv_l, conv_custom], name='merge')
                 # Apply nonlinearity
                 h = tf.nn.relu(tf.nn.bias_add(merge_layer, b), name="relu")
+
+                filter_shape = [filter_size, 1, num_filters, num_filters]
+                W2 = tf.Variable(tf.truncated_normal(filter_shape, stddev=0.1), name="W2")
+
+                conv_l_2 = tf.nn.conv2d(
+                    h,
+                    W2,
+                    strides=[1, 1, 1, 1],
+                    padding="VALID",
+                    name="conv2")
+
+                # Concat the supervised and unsupervised CNN layers
+                # merge_layer = tf.concat(3, [conv_l, self.custom_units])
+                conv_custom_2 = tf.nn.conv2d(
+                    h,
+                    self.custom_W_2,
+                    strides=[1, 1, 1, 1],
+                    padding='VALID',
+                    name='preTrainConv2'
+                )
+                merge_layer_2 = tf.add_n([conv_l_2, conv_custom_2], name='merge2')
+                # Apply nonlinearity
+                h_2 = tf.nn.relu(tf.nn.bias_add(merge_layer_2, b), name="relu2")
+
                 # Maxpooling over the outputs
                 pooled = tf.nn.max_pool(
-                    h,
-                    ksize=[1, sequence_length - filter_size + 1, 1, 1],
+                    h_2,
+                    ksize=[1, h_2.get_shape().as_list()[1] - filter_size + 1, 1, 1],
                     strides=[1, 1, 1, 1],
                     padding='VALID',
                     name="pool")
@@ -74,7 +95,6 @@ class TextCNN(object):
         num_filters_total = num_filters * len(filter_sizes)
         self.h_pool = tf.concat(3, pooled_outputs)
         self.h_pool_flat = tf.reshape(self.h_pool, [-1, num_filters_total])
-
         # Add dropout
         with tf.name_scope("dropout"):
             self.h_drop = tf.nn.dropout(self.h_pool_flat, self.dropout_keep_prob)
@@ -83,7 +103,7 @@ class TextCNN(object):
         # Final (unnormalized) scores and predictions
         with tf.name_scope("output"):
             W = tf.get_variable(
-                "W",
+                "W2",
                 shape=[num_filters_total, num_classes],
                 initializer=tf.contrib.layers.xavier_initializer())
             b = tf.Variable(tf.constant(0.1, shape=[num_classes]), name="b")
