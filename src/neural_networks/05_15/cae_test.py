@@ -12,7 +12,7 @@ import pickle
 # Much of the code has been used from Parag Mittal
 # %%
 def autoencoder(input_shape=[None, 30, 50, 1],
-                n_filters=[1, 10],
+                n_filters=[1, 20],
                 filter_sizes=[3, 3],
                 corruption=False):
     """Build a deep autoencoder w/ tied weights.
@@ -176,7 +176,7 @@ def test_convVAE():
 
     print(np.array(encoder[0]).shape)
     print(np.array(encoder[1]).shape)
-    pickle.dump(encoder, open('../../../darkweb_data/5_15/filter_weights_10_stacked.pickle', 'wb'))
+    pickle.dump(encoder, open('../../../darkweb_data/5_15/filter_weights_20_stacked.pickle', 'wb'))
     # pickle.dump(encoder, open('../../../darkweb_data/5_15/conv_layer.pickle', 'wb'))
 
     # Restore the pretrained layers

@@ -14,8 +14,8 @@ class TextCNN(object):
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob")
         # Add a pretrained convolution layer - from the autoencoder
         self.custom_units = tf.placeholder(tf.float32, shape=[None, 28, 1, 10], name='pretrainConv')
-        self.custom_W_1 = tf.placeholder(tf.float32, shape=[None, 50, 1, 20], name='pretrainFilter')
-        self.custom_W_2 = tf.placeholder(tf.float32, shape=[None, 1, 20, 20], name='pretrainFilter')
+        self.custom_W_1 = tf.placeholder(tf.float32, shape=[None, 50, 1, 10], name='pretrainFilter')
+        self.custom_W_2 = tf.placeholder(tf.float32, shape=[None, 1, 10, 10], name='pretrainFilter')
 
         # Keeping track of l2 regularization loss (optional)
         l2_loss = tf.constant(0.0)

@@ -20,7 +20,7 @@ import sklearn.metrics
 # Model Hyperparameters
 tf.flags.DEFINE_integer("embedding_dim", 50, "Dimensionality of character embedding (default: 128)")
 tf.flags.DEFINE_string("filter_sizes", "3", "Comma-separated filter sizes (default: '3,4,5')")
-tf.flags.DEFINE_integer("num_filters", 20, "Number of filters per filter size (default: 128)")
+tf.flags.DEFINE_integer("num_filters", 10, "Number of filters per filter size (default: 128)")
 tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability (default: 0.5)")
 tf.flags.DEFINE_float("l2_reg_lambda", 0.3, "L2 regularization lambda (default: 0.0)")
 
@@ -54,7 +54,7 @@ vocab_dict = pickle.load(open('../../../darkweb_data/5_15/data/vocab_dict_revise
 conv_layer = pickle.load(open('../../../darkweb_data/5_15/conv_layer.pickle', 'rb'))
 conv_out = conv_layer[0] # for now consider the first layer
 
-filter_weights= pickle.load(open('../../../darkweb_data/5_15/filter_weights_20_stacked.pickle', 'rb'))
+filter_weights= pickle.load(open('../../../darkweb_data/5_15/filter_weights_10_stacked.pickle', 'rb'))
 
 num_folds = 5
 num_cols = 10
