@@ -17,6 +17,7 @@ import re
 import os
 import pickle
 
+
 def getStopWords(data):
     for line in data:
         words = line.split(' ')
@@ -31,7 +32,7 @@ def getSentences(content):
     # Now filter some sentences which are actually not period aborted sentences
     new_sent_list = []
     for s in sent_list:
-        if len(s) < 5:
+        if len(s) < 10:
             continue
         new_sent_list.append(s.lstrip())
 
@@ -159,7 +160,7 @@ def getSentenceSplits(sent, stop):
     return docs
 
 
-def createInpOutMatrix(sent, w2v_feat):
+def createInpOutMatrix(sent, w2v_feat, sen_length):
     contextOutMatrix = []
     contextInpMatrix = []
     for s in range(len(sent)):
@@ -173,90 +174,98 @@ def createInpOutMatrix(sent, w2v_feat):
             else:
                 context_input.append(np.random.uniform(-0.25, 0.25, (50)))
 
-        # Sentences should be of length 10
-        if len(context_input) < 10:
+        # Sentences should be of length 15
+        if len(context_input) < sen_length:
             len_cur = len(context_input)
-            for idx_fill in range(10 - len_cur):
+            for idx_fill in range(sen_length - len_cur):
                 context_input.append(np.random.uniform(-0.25, 0.25, (50)))
         else:
-            context_input = context_input[:10]
+            context_input = context_input[:sen_length]
 
         contextInpMatrix.append(context_input)
 
         # Create the output
         # Add the first word context for that sentence
-        flag = 0
+        cnt_words = 0
         cur_idx = 1
         while cur_idx < len(sentence):
             if sentence[cur_idx] in w2v_feat:
                 context_output.append(w2v_feat[sentence[cur_idx]])
-                flag = 1
+                cnt_words += 1
                 break
             cur_idx += 1
 
-        if flag == 0:
-            sum = np.random.uniform(-0.25, 0.25, (50))  # Sample from uniform distribution
-            context_output.append(sum)
+        if cnt_words == 0:
+            context_output.append(np.random.uniform(-0.25, 0.25, (50))) # Sample from uniform distribution
 
         # Words from 1 to last but one
         for w in range(1, len(sentence)-1):
-            flag = 0
             word_left = sentence[w-1]
             word_right = sentence[w+1]
             sum = np.array([0. for _ in range(50)])
+            cnt_words = 0
             if word_left in w2v_feat:
                 sum += w2v_feat[word_left]
-                flag = 1
+                cnt_words += 1
             if word_right in w2v_feat:
                 sum += w2v_feat[word_right]
-                flag = 1
+                cnt_words += 1
+
+            if cnt_words == 2:
+                sum_mean = sum / 2.
+            else:
+                sum_mean = sum
 
             # if both words do not exist
-            if flag == 0:
+            if cnt_words == 0:
                 cur_idx = w+2
                 while cur_idx < len(sentence):
                     if sentence[cur_idx] in w2v_feat:
                         sum += w2v_feat[sentence[cur_idx]]
-                        flag = 1
+                        cnt_words += 1
                         break
                     cur_idx += 1
 
-            if flag == 0:
                 cur_idx = w - 2
                 while cur_idx >= 0:
                     if sentence[cur_idx] in w2v_feat:
                         sum += w2v_feat[sentence[cur_idx]]
-                        flag = 1
+                        cnt_words += 1
                         break
                     cur_idx -= 1
 
-            if flag == 0:
-                sum = np.random.uniform(-0.25, 0.25, (50)) # Sample from uniform distribution
-                context_output.append(sum)
+                if cnt_words == 2:
+                    sum_mean = sum / 2.
+                else:
+                    sum_mean = sum
+
+            if cnt_words == 0:
+                sum_mean = np.random.uniform(-0.25, 0.25, (50)) # Sample from uniform distribution
+
+            context_output.append(sum_mean)
 
         # Add the last word context for that sentence
-        flag = 0
+        cnt_words = 0
         cur_idx = len(sentence) - 2
         while cur_idx >= 0:
             if sentence[cur_idx] in w2v_feat:
                 context_output.append(w2v_feat[sentence[cur_idx]])
-                flag = 1
+                cnt_words += 1
                 break
             cur_idx -= 1
 
-        if flag == 0:
-            sum = np.random.uniform(-0.25, 0.25, (50))  # Sample from uniform distribution
-            context_output.append(sum)
+        if cnt_words == 0:
+            context_output.append(np.random.uniform(-0.25, 0.25, (50))) # Sample from uniform distribution
 
-        # Sentences should be of length 10
-        if len(context_output) < 10:
+        # Sentences should be of length 15
+        if len(context_output) < sen_length:
             len_cur = len(context_output)
-            for idx_fill in range(10-len_cur):
+            for idx_fill in range(sen_length-len_cur):
                 context_output.append(np.random.uniform(-0.25, 0.25, (50)))
         else:
-            context_output = context_output[:10]
+            context_output = context_output[:sen_length]
 
-        # print(np.array(context_sentence).shape)
+        # print(np.array(context_output).shape)
         contextOutMatrix.append(context_output)
 
     contextOutMatrix = np.array(contextOutMatrix)
@@ -267,7 +276,7 @@ def createInpOutMatrix(sent, w2v_feat):
 if __name__ == "__main__":
     stopwords_file = open('../../darkweb_data/Stop_Words.txt', 'r')
     stopwords = getStopWords(stopwords_file)
-    w2v_feat = pickle.load(open('../../darkweb_data/5_10/word2vec_train_model_d50_min2.pickle', 'rb'))
+    w2v_feat = pickle.load(open('../../darkweb_data/5_15/word2vec_train_model_d50_min2.pickle', 'rb'))
 
     # sentences_all = []
     # for idx in range(1, 11):
@@ -283,35 +292,11 @@ if __name__ == "__main__":
     # pickle.dump(sentences_all, open('../../darkweb_data/sentences_unlabel.pickle', 'wb'))
 
     """ Load the unlabeled sentences"""
+    sentence_max_len = 30
     sentences_all = pickle.load(open('../../darkweb_data/sentences_unlabel.pickle', 'rb'))
-    InpMatrix, OutMatrix = createInpOutMatrix(sentences_all, w2v_feat)
+    InpMatrix, OutMatrix = createInpOutMatrix(sentences_all, w2v_feat, sentence_max_len)
 
     print(InpMatrix.shape, OutMatrix.shape)
 
-    pickle.dump((InpMatrix, OutMatrix), open('../../darkweb_data/5_10/Input_Output_Matrices.pickle', 'wb'))
+    pickle.dump((InpMatrix, OutMatrix), open('../../darkweb_data/5_15/unlabeled/Input_Output_Matrices.pickle', 'wb'))
 
-        # print(len(corpus), len(sentences))
-
-        # corpus = getCorpusPosts(forumsData)
-
-        # Save the preprocessed data to file
-        # fId = 40
-        #
-        # start = 'all'
-        # directory = '../../darkweb_data/4_23/unlabeled_corpus'
-        # if not os.path.exists(directory):
-        #     os.makedirs(directory)
-        # thefile = open(directory + '/forum_' + str(fId) + '_' + 'input_phrases_unlabel_' + str(idx) + '.txt', 'w')
-        # thefile_idx = open(directory + '/forum_' + str(fId) + '_' + 'input_phrases_indexed_unlabel_' + str(idx) + '.txt', 'w')
-        # # thefile = open(directory + '/total_corpus.txt', 'w')
-        #
-        # for item in range(len(corpus)):
-        #     # print(corpus[item])
-        #     thefile.write("%s \n" % corpus[item])
-        #
-        # for item in range(len(corpus_indexed)):
-        #     # print(corpus[item])
-        #     thefile_idx.write("%s \n" % corpus_indexed[item])
-        #
-        # thefile.close()
-        # thefile_idx.close()

@@ -24,7 +24,7 @@ def getStopWords(data):
     return words
 
 
-def createSentencesPhrases(data, phrase_sentences, dict, stopwords, tf_idf):
+def createSentences(data, phrase_sentences, dict, stopwords, tf_idf):
     docs_phrases = []
     cnt_line = 0
     for line in phrase_sentences:
@@ -109,30 +109,30 @@ if __name__ == "__main__":
     stopwords = getStopWords(stopwords_file)
 
     """ Unlabeled sampeles part """
-    # for idx in range(0, 11):
-    #     inputData = open(output_dir + 'unlabeled_part/partitionOut_sg_3_unlabeled_' + str(idx)+ '.txt', 'r')
-    #
-    #     # Load the trained word2vec model and the sentences
-    #     sentences_data = open(output_dir + 'unlabeled_corpus/forum_40_input_phrases_indexed_unlabel_'
-    #                                        + str(idx) + '.txt', 'r')
-    #
-    #     tf_idf = pickle.load(open(output_dir + 'unlabeled_tfidf/tfidf_unlabeled_'
-    #                                            + str(idx) + '.pickle', 'rb'))
-    #
-    #     docs = createSentences(sentences_data, inputData, dictionary, stopwords, tf_idf)
-    #
-    #     print(len(docs))
-    #     pickle.dump(docs, open(output_dir + 'unlabeled_final/docs_' + str(idx) + '.pickle', 'wb'))
+    for idx in range(0, 11):
+        inputData = open(output_dir + 'unlabeled_part/partitionOut_sg_3_unlabeled_' + str(idx)+ '.txt', 'r')
+
+        # Load the trained word2vec model and the sentences
+        sentences_data = open(output_dir + 'unlabeled_corpus/forum_40_input_phrases_indexed_unlabel_'
+                                           + str(idx) + '.txt', 'r')
+
+        tf_idf = pickle.load(open(output_dir + 'unlabeled_tfidf/tfidf_unlabeled_'
+                                               + str(idx) + '.pickle', 'rb'))
+
+        docs = createSentences(sentences_data, inputData, dictionary, stopwords, tf_idf)
+
+        print(len(docs))
+        pickle.dump(docs, open(output_dir + 'unlabeled_final/docs_' + str(idx) + '.pickle', 'wb'))
 
     """" Labeled samples part """
-    inputData = open(output_dir + 'partitionOut_sg_3.txt', 'r')
-
-    # Load the trained word2vec model and the sentences
-    sentences_data = open(output_dir + 'forum_40_input_phrases_indexed.txt', 'r')
-
-    tf_idf = pickle.load(open(output_dir + 'tfidf_f40_labels.pickle', 'rb'))
-
-    docs = createSentences(sentences_data, inputData, dictionary, stopwords, tf_idf)
-
-    print(len(docs))
-    pickle.dump(docs, open(output_dir + 'docs_label.pickle', 'wb'))
+    # inputData = open(output_dir + 'partitionOut_sg_3.txt', 'r')
+    #
+    # # Load the trained word2vec model and the sentences
+    # sentences_data = open(output_dir + 'forum_40_input_phrases_indexed.txt', 'r')
+    #
+    # tf_idf = pickle.load(open(output_dir + 'tfidf_f40_labels.pickle', 'rb'))
+    #
+    # docs = createSentences(sentences_data, inputData, dictionary, stopwords, tf_idf)
+    #
+    # print(len(docs))
+    # pickle.dump(docs, open(output_dir + 'docs_label.pickle', 'wb'))

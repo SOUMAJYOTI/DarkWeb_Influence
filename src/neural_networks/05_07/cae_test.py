@@ -1,3 +1,7 @@
+"""Tutorial on how to create a convolutional autoencoder w/ Tensorflow.
+
+Parag K. Mital, Jan 2016
+"""
 import tensorflow as tf
 import numpy as np
 import math
@@ -5,17 +9,12 @@ from libs.activations import lrelu
 from libs.utils import corrupt
 import pickle
 
-
-# Use some sort of unsupervised deconvolution feature for the final neural network
-# Instead of the convolution feature, use the second decoding model for the convolved layer
-
-# Much of the code has been used from Parag Mittal
 # %%
-def autoencoder(input_shape=[None, 30, 50, 1],
-                n_filters=[1, 10],
-                filter_sizes=[3, 3],
+def autoencoder(input_shape=[None, 15, 50, 1],
+                n_filters=[1, 10, 10],
+                filter_sizes=[3, 3, 3],
                 corruption=False):
-    """Build a deep autoencoder w/ tied weights.
+    """Build a deep denoising autoencoder w/ tied weights.
 
     Parameters
     ----------
@@ -46,12 +45,20 @@ def autoencoder(input_shape=[None, 30, 50, 1],
     # input to the network
     x = tf.placeholder(
         tf.float32, input_shape, name='x')
-    y_out = tf.placeholder(
-        tf.float32, input_shape, name='x')
 
     # %%
-
-    x_tensor = x
+    # ensure 2-d is converted to square tensor.
+    if len(x.get_shape()) == 2:
+        x_dim = np.sqrt(x.get_shape().as_list()[1])
+        if x_dim != int(x_dim):
+            raise ValueError('Unsupported input dimensions')
+        x_dim = int(x_dim)
+        x_tensor = tf.reshape(
+            x, [-1, x_dim, x_dim, n_filters[0]])
+    elif len(x.get_shape()) == 4:
+        x_tensor = x
+    else:
+        raise ValueError('Unsupported input dimensions')
     current_input = x_tensor
 
     # %%
@@ -63,24 +70,22 @@ def autoencoder(input_shape=[None, 30, 50, 1],
     # Build the encoder
     encoder = []
     shapes = []
-    conv_layer = []
-    # n_input --> number of layers
-    # n_output --> number of layers
+    # n_input --> number of
     for layer_i, n_output in enumerate(n_filters[1:]):
         n_input = current_input.get_shape().as_list()[3]
         shapes.append(current_input.get_shape().as_list())
         W = tf.Variable(
             tf.random_uniform([
                 filter_sizes[layer_i],
-                50,
+                50, #filter_sizes[layer_i],
                 n_input, n_output],
                 -1.0 / math.sqrt(n_input),
                 1.0 / math.sqrt(n_input)))
         b = tf.Variable(tf.zeros([n_output]))
         encoder.append(W)
-        conv_layer.append(tf.nn.conv2d(
-                current_input, W, strides=[1, 1, 1, 1], padding='VALID', name='encoder'))
-        output = lrelu(tf.add(conv_layer[layer_i], b))
+        output = lrelu(
+            tf.add(tf.nn.conv2d(
+                current_input, W, strides=[1, 2, 2, 1], padding='SAME'), b))
         current_input = output
 
     # %%
@@ -98,66 +103,80 @@ def autoencoder(input_shape=[None, 30, 50, 1],
             tf.nn.conv2d_transpose(
                 current_input, W,
                 tf.stack([tf.shape(x)[0], shape[1], shape[2], shape[3]]),
-                strides=[1, 1, 1, 1], padding='VALID', name='decoder'), b))
+                strides=[1, 2, 2, 1], padding='SAME'), b))
         current_input = output
 
     # %%
     # now have the reconstruction through the network
     y = current_input
     # cost function measures pixel-wise difference
-    cost = tf.reduce_sum(tf.square(y - y_out))
+    cost = tf.reduce_sum(tf.square(y - x_tensor))
 
     # %%
-    return {'x': x, 'z': z, 'y': y_out, 'conv': conv_layer, 'cost': cost}
+    return {'x': x, 'z': z, 'y': y, 'cost': cost}
 
 
 # %%
-def test_convVAE():
-    InpMatrix, OutMatrix = pickle.load(open('../../../darkweb_data/5_15/unlabeled/Input_Output_Matrices.pickle', 'rb'))
+def test_mnist():
+    """Test the convolutional autoencder using MNIST."""
+    # %%
+    import tensorflow as tf
+    import tensorflow.examples.tutorials.mnist.input_data as input_data
+    import matplotlib.pyplot as plt
+
+    InpMatrix, OutMatrix = pickle.load(open('../../../darkweb_data/5_10/Input_Output_Matrices.pickle', 'rb'))
     InpMatrix = np.reshape(InpMatrix, (InpMatrix.shape[0], InpMatrix.shape[1], InpMatrix.shape[2], 1))
     OutMatrix = np.reshape(OutMatrix, (OutMatrix.shape[0], OutMatrix.shape[1], OutMatrix.shape[2], 1))
 
+    # # %%
+    # # load MNIST as before
+    # mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
+    # mean_img = np.mean(mnist.train.images, axis=0)
     ae = autoencoder()
 
-    # # %%
+    # %%
     learning_rate = 0.01
     optimizer = tf.train.AdamOptimizer(learning_rate).minimize(ae['cost'])
 
     # %%
     # We create a session to use the graph
-    config = tf.ConfigProto()
-    config.gpu_options.allow_growth = True
-    sess = tf.Session(config=config)
-    saver = tf.train.Saver()
-    #
+    sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
-    batch_size = 32
+    batch_size = 300
     # Create the batches of the data
     num_train_data = InpMatrix.shape[0]
-    # num_train_data = 1000
+    num_train_data = 1000
 
+    # %%
     # Fit all training data
-    n_epochs = 30
+    n_epochs = 10
     for epoch_i in range(n_epochs):
-        # Shuffle the training data over the epochs
-        shuffle_indices = np.random.permutation(np.arange(num_train_data))
-        InpMatrix = InpMatrix[shuffle_indices]
         for idx in range(num_train_data // batch_size):
-            batch_xs_in = InpMatrix[idx * batch_size: (idx + 1) * batch_size]
-            batch_xs_out = OutMatrix[idx * batch_size: (idx + 1) * batch_size]
-            _, conv_layer = sess.run([optimizer, ae['conv']], feed_dict={ae['x']: batch_xs_in, ae['y']: batch_xs_out})
-        print(epoch_i, sess.run(ae['cost'], feed_dict={ae['x']: batch_xs_in, ae['y']: batch_xs_out}))
-    # saver.save(sess, "tmp/model")
+            batch_xs = InpMatrix[idx * batch_size: (idx + 1) * batch_size]
+            sess.run(optimizer, feed_dict={ae['x']: batch_xs})
+        print(epoch_i, sess.run(ae['cost'], feed_dict={ae['x']: batch_xs}))
 
-    pickle.dump(conv_layer, open('../../../darkweb_data/5_15/conv_layer.pickle', 'wb'))
+    # %%
+    # Plot example reconstructions
+    # n_examples = 10
+    # test_xs, _ = mnist.test.next_batch(n_examples)
+    # test_xs_norm = np.array([img - mean_img for img in test_xs])
+    # recon = sess.run(ae['y'], feed_dict={ae['x']: test_xs_norm})
+    # print(recon.shape)
+    # fig, axs = plt.subplots(2, n_examples, figsize=(10, 2))
+    # for example_i in range(n_examples):
+    #     axs[0][example_i].imshow(
+    #         np.reshape(test_xs[example_i, :], (28, 28)))
+    #     axs[1][example_i].imshow(
+    #         np.reshape(
+    #             np.reshape(recon[example_i, ...], (784,)) + mean_img,
+    #             (28, 28)))
+    # fig.show()
+    # plt.draw()
+    # plt.waitforbuttonpress()
 
-    # Restore the pretrained layers
-    # saver = tf.train.import_meta_graph('tmp/model.meta')
-    # saver.restore(sess, tf.train.latest_checkpoint('tmp/'))
-    # conv_out = sess.run(ae['conv'], feed_dict={ae['x']: InpMatrix, ae['y']: OutMatrix})
-    # print(tf.shape(conv_out))
 
-
+# %%
 if __name__ == '__main__':
-    test_convVAE()
+    test_mnist()

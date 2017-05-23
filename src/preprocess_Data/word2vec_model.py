@@ -1,4 +1,3 @@
-
 from gensim.models import Word2Vec
 import pickle
 import pandas as pd
@@ -8,21 +7,24 @@ from sklearn.multiclass import OneVsRestClassifier
 from bs4 import BeautifulSoup
 import re
 
+
 def getStopWords(data):
     for line in data:
         words = line.split(' ')
     # print(len(words))
     return words
 
+
 def word2vec_model(sentences):
     min_count = 2
     size = 50
-    window = 4
+    window = 3
 
     model = Word2Vec(sentences, min_count=min_count, size=size, window=window, sg=1)
     vocab = list(model.wv.vocab)
 
     return model, vocab
+
 
 def createSentences(data, stop):
     sent_list = []
@@ -32,12 +34,13 @@ def createSentences(data, stop):
         temp = []
         for w in range(len(sent_words)):
             word = sent_words[w]
-            if word not in stop:
-                temp.append(word)
+            # if word not in stop:
+            temp.append(word)
         if len(temp) >= 5:
             sent_list.append(sent_words)
 
     return sent_list
+
 
 def createVocab(data):
     vocab = {}
@@ -47,9 +50,9 @@ def createVocab(data):
         sent_words = line.split(' ')
         for w in range(len(sent_words)):
             word = sent_words[w]
-            if word not in vocab:
-                vocab[word] = vocab_count
-                vocab_count += 1
+            # if word not in vocab:
+            vocab[word] = vocab_count
+            vocab_count += 1
 
     return vocab
 
@@ -68,17 +71,20 @@ if __name__ == "__main__":
     print(len(sentences))
     # print(type(w2v_feat.vocab))
 
-    k = 0
-    vocab_inv = {}
+    k = 1
+    vocab_inv = [0 for _ in range(len(vocab_dict)+1)] # start from 1
+    vocab_dict_new = {}
     for v in vocab:
-        vocab_inv[vocab_dict[v]] = v
+        # print(v)
+        vocab_dict_new[v] = k
+        vocab_inv[k] = v
+        k += 1
 
-    # print(len(vocab))
+    print(len(vocab_dict_new))
 
-    # pickle.dump(w2v_feat, open('../../darkweb_data/4_23/word2vec_train_model_d50_min3.pickle', 'wb'))
-    pickle.dump(w2v_feat, open('../../darkweb_data/5_10/word2vec_train_vocab_d50_min2.pickle', 'wb'))
-    pickle.dump(vocab_dict, open('../../darkweb_data/5_10/vocab_dict.pickle', 'wb'))
-    pickle.dump(vocab_inv, open('../../darkweb_data/5_10/vocab_inv_dict.pickle', 'wb'))
+    pickle.dump(w2v_feat, open('../../darkweb_data/5_15/word2vec_train_model_d50_min2.pickle', 'wb'))
+    pickle.dump(vocab_dict, open('../../darkweb_data/5_15/vocab_dict_new.pickle', 'wb'))
+    pickle.dump(vocab_inv, open('../../darkweb_data/5_15/vocab_inv_dict.pickle', 'wb'))
 
 
 
