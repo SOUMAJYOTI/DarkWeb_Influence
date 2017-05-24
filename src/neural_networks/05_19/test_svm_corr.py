@@ -49,41 +49,6 @@ def labelCorrMatrix(Y):
             if corr[l1, l2] < 0.03:
                 corr[l1, l2] = 0.
 
-
-    # corr = d.corr()
-
-    # sns.set(style="white")
-    #
-    # # Generate a mask for the upper triangle
-    # mask = np.zeros_like(corr, dtype=np.bool)
-    # mask[np.triu_indices_from(mask)] = True
-    #
-    # labels = ['Apprehension', 'Community_Supportive', 'Authenticating', 'Info_seeking', 'Providing_information',
-    #           'Prudent_Statement', 'Disgressive', 'Personal_Involvement', 'Sarcastic', 'Sensemaking',
-    #           'Directive_Action']
-    #
-    # l1 = labels
-    # l1.reverse()
-    # x = range(len(l1))
-    # # Set up the matplotlib figure
-    # f, ax = plt.subplots(figsize=(11, 9))
-    #
-    # # Generate a custom diverging colormap
-    # cmap = sns.diverging_palette(50, 100, as_cmap=True)
-    #
-    # # Draw the heatmap with the mask and correct aspect ratio
-    # sns.heatmap(corr, cmap=cmap,
-    #             square=True,
-    #             linewidths=.5, cbar_kws={"shrink": .5}, ax=ax)
-    #
-    # plt.yticks(x, l1, rotation=360)
-    # labels = ['Apprehension', 'Community_Supportive', 'Authenticating', 'Info_seeking', 'Providing_information',
-    #           'Prudent_Statement', 'Disgressive', 'Personal_Involvement', 'Sarcastic', 'Sensemaking',
-    #           'Directive_Action']
-    # plt.xticks(x, labels, rotation=50)
-    # plt.subplots_adjust(bottom=0.20)
-    # plt.show()
-
     return corr
 
 
@@ -290,7 +255,6 @@ def main():
                 input_dir = '../../../darkweb_data/05/5_19/data_test/v1/fold_' + str(idx_fold) + '/col_' + str(
                     col) + '/'
                 X_train = pickle.load(open(input_dir + 'X_train_l.pickle', 'rb'))
-                # Y_train = pickle.load(open(input_dir + 'Y_train_l.pickle', 'rb'))
                 Y_train_all = pickle.load(open(input_dir + 'Y_train_all.pickle', 'rb'))
 
                 X_test = X_test_new[col-2]
@@ -330,8 +294,7 @@ def main():
                 # get bias - ANY INSTANCE
                 b_svm = Y_params[0, col-2] - np.dot(w_svm, np.transpose(X_params[0]))
 
-                Y_prev = Y_test_initial
-                Y_curr = Y_test_initial
+                Y_curr = Y_test
                 for iter_pr in range(5):
                     for idx_inst_test in range(X_test.shape[0]):
                         model_val_pos = returnModelVal(X_test[idx_inst_test], Y_prev[idx_inst_test,:], 1.0, u, w_t, b_svm, rel_labels)

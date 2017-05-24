@@ -27,21 +27,20 @@
       <file leaf-file-name="test_svm_corr.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/neural_networks/05_19/test_svm_corr.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="330">
+              <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
               <folding>
                 <element signature="e#479#505#0" expanded="false" />
                 <element signature="e#551#609#0" expanded="false" />
                 <element signature="e#650#680#0" expanded="false" />
                 <element signature="e#725#788#0" expanded="false" />
-                <element signature="e#819#2626#0" expanded="false" />
-                <element signature="e#1299#1316#0" expanded="false" />
-                <element signature="e#2679#2943#0" expanded="false" />
-                <element signature="e#3090#4731#0" expanded="false" />
-                <element signature="e#4804#5173#0" expanded="false" />
-                <element signature="e#5196#5222#0" expanded="false" />
-                <element signature="e#5309#5852#0" expanded="false" />
-                <element signature="e#5912#6491#0" expanded="false" />
+                <element signature="e#819#1309#0" expanded="false" />
+                <element signature="e#1362#1626#0" expanded="false" />
+                <element signature="e#1773#3414#0" expanded="false" />
+                <element signature="e#3487#3856#0" expanded="false" />
+                <element signature="e#3879#3905#0" expanded="false" />
+                <element signature="e#3992#4535#0" expanded="false" />
+                <element signature="e#4595#5174#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -997,21 +996,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/neural_networks/05_19/test_svm_corr.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="330">
+          <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
           <folding>
             <element signature="e#479#505#0" expanded="false" />
             <element signature="e#551#609#0" expanded="false" />
             <element signature="e#650#680#0" expanded="false" />
             <element signature="e#725#788#0" expanded="false" />
-            <element signature="e#819#2626#0" expanded="false" />
-            <element signature="e#1299#1316#0" expanded="false" />
-            <element signature="e#2679#2943#0" expanded="false" />
-            <element signature="e#3090#4731#0" expanded="false" />
-            <element signature="e#4804#5173#0" expanded="false" />
-            <element signature="e#5196#5222#0" expanded="false" />
-            <element signature="e#5309#5852#0" expanded="false" />
-            <element signature="e#5912#6491#0" expanded="false" />
+            <element signature="e#819#1309#0" expanded="false" />
+            <element signature="e#1362#1626#0" expanded="false" />
+            <element signature="e#1773#3414#0" expanded="false" />
+            <element signature="e#3487#3856#0" expanded="false" />
+            <element signature="e#3879#3905#0" expanded="false" />
+            <element signature="e#3992#4535#0" expanded="false" />
+            <element signature="e#4595#5174#0" expanded="false" />
           </folding>
         </state>
       </provider>
