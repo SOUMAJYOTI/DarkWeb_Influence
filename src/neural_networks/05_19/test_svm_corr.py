@@ -106,7 +106,7 @@ def get_matrices(X, Y, curLabel, relLables, C=1000.1):
     # eta_1 and eta_2 control the weights of inter-label
     # and individual leable contributions to feature model $f$
     eta_1 = 1.
-    eta_2 = 0.2
+    eta_2 = 0.5
 
     # the svm objective function is:
     # \frac{1}{2} \alpha^T K \alpha + \alpha 1^T
@@ -169,7 +169,7 @@ def predict(X):
 # parameters for each label l \in L
 def getParams(a, X, Y, relLabels, curLabel):
     eta_1 = 1.
-    eta_2 = 0.2
+    eta_2 = 0.5
 
     sum_u = np.zeros((1, X.shape[1]))
     a.shape = (a.shape[0], 1)
@@ -201,7 +201,7 @@ def returnModelVal(X, Y, y_fix, u, w, b, relLabels):
     """
 
     eta_1 = 1.
-    eta_2 = 0.2
+    eta_2 = 0.5
     # X.shape = (X.shape[0], 1)
 
     p_1 = eta_1*y_fix*(np.dot(u, np.transpose(X)) + b)
@@ -240,6 +240,9 @@ def main():
                                   '/' + 'X_test.pickle', 'rb'))
         Y_test_all = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v1/fold_' + str(idx_fold) +
                                   '/' + 'Y_test_all.pickle', 'rb'))
+        Y_test_initial = []
+        X_test_new = []
+        Y_test_new = []
 
         """ Initial labels from prediction """
         Y_initial = np.zeros(Y_test_all.shape)
@@ -247,14 +250,12 @@ def main():
             input_dir = '../../../darkweb_data/05/5_19/data_test/v1/fold_' + str(idx_fold) + '/col_' + str(col) + '/'
             X_train = pickle.load(open(input_dir + 'X_train_l.pickle', 'rb'))
             Y_train = pickle.load(open(input_dir + 'Y_train_l.pickle', 'rb'))
-            Y_train_all = pickle.load(open(input_dir + 'Y_train_all.pickle', 'rb'))
 
             clf = svm.LinearSVC(penalty='l2')
             clf.fit(X_train, Y_train)
             Y_initial[:, col-2] = clf.predict(X_test)
 
-        for col in range(2, 12):
-            Y_test = Y_test_all[:, col-2]
+            Y_test = Y_test_all[:, col - 2]
 
             """ Sample test data """
             X_test_pos = []
@@ -279,76 +280,70 @@ def main():
                 X_test_pos = X_test_pos[:X_test_neg.shape[0]]
                 Y_test_initial_pos = Y_test_initial_pos[:X_test_neg.shape[0]]
 
-            Y_test_initial = np.concatenate((Y_test_initial_neg, Y_test_initial_pos), axis=0)
-            X_test_final = np.concatenate((X_test_neg, X_test_pos), axis=0)
-            Y_test_final = np.array([-1.] * X_test_neg.shape[0] + [1.] * X_test_pos.shape[0])
+            Y_test_initial.append(np.concatenate((Y_test_initial_neg, Y_test_initial_pos), axis=0))
+            X_test_new.append(np.concatenate((X_test_neg, X_test_pos), axis=0))
+            Y_test_new.append(np.array([-1.] * X_test_neg.shape[0] + [1.] * X_test_pos.shape[0]))
 
-            rel_labels = []
-            # TODO : CHECK THIS IF CORRECT !!!!!!!
-            for l in range(corr.shape[0]):
-                if corr[col - 2, l] > 0. and ((col-2) != l):
-                    rel_labels.append(l)
+        # Iterated Conditional Modes
+        for iter_predict in range(2):
+            for col in range(2, 12):
+                input_dir = '../../../darkweb_data/05/5_19/data_test/v1/fold_' + str(idx_fold) + '/col_' + str(
+                    col) + '/'
+                X_train = pickle.load(open(input_dir + 'X_train_l.pickle', 'rb'))
+                # Y_train = pickle.load(open(input_dir + 'Y_train_l.pickle', 'rb'))
+                Y_train_all = pickle.load(open(input_dir + 'Y_train_all.pickle', 'rb'))
 
-            rel_labels = np.array(rel_labels)
+                X_test = X_test_new[col-2]
+                Y_test = Y_test_new[col-2]
+                Y_prev = Y_test_initial[col-2]
 
-            for idx_ind1 in range(Y_train_all.shape[0]):
-                for idx_ind2 in range(Y_train_all.shape[1]):
-                    if Y_train_all[idx_ind1, idx_ind2] == 0.:
-                        Y_train_all[idx_ind1, idx_ind2] = -1.
+                # X_train = Y
+                rel_labels = []
+                # TODO : CHECK THIS IF CORRECT !!!!!!!
+                for l in range(corr.shape[0]):
+                    if corr[col - 2, l] > 0. and ((col-2) != l):
+                        rel_labels.append(l)
 
-            K, P, q, A, G, h, b_opt = get_matrices(X_train, Y_train_all, col - 2, rel_labels)
+                rel_labels = np.array(rel_labels)
 
-            """ CVXOPT SOLUTION """
-            opt = cvxopt.solvers.options['show_progress'] = False
+                for idx_ind1 in range(Y_train_all.shape[0]):
+                    for idx_ind2 in range(Y_train_all.shape[1]):
+                        if Y_train_all[idx_ind1, idx_ind2] == 0.:
+                            Y_train_all[idx_ind1, idx_ind2] = -1.
 
-            solution = cvxopt.solvers.qp(P, q, G, h, A, b_opt)
-            a = np.ravel(solution['x'])
+                K, P, q, A, G, h, b_opt = get_matrices(X_train, Y_train_all, col - 2, rel_labels)
 
-            sv = a > 1e-5
-            ind = np.arange(len(a))[sv]
+                """ CVXOPT SOLUTION """
+                opt = cvxopt.solvers.options['show_progress'] = False
+                solution = cvxopt.solvers.qp(P, q, G, h, A, b_opt)
+                a = np.ravel(solution['x'])
+                sv = a > 1e-5
+                a = a[sv]
 
-            a = a[sv]
+                """ Get the parameters """
+                Y_params = Y_train_all[sv]
+                X_params = X_train[sv]
 
-            Y_params = Y_train_all[sv]
-            X_params = X_train[sv]
-            sv_x = X_train[sv]
-            sv_y = Y_train_all[sv]
-            # print("%d support vectors out of %d points" % (len(a), X_train.shape[0]))
+                u, w_t = getParams(a, X_params, Y_params, rel_labels, col-2)
+                # get weights
+                w_svm = np.dot(np.transpose(a) * Y_params[:, col-2], X_params)
+                # get bias - ANY INSTANCE
+                b_svm = Y_params[0, col-2] - np.dot(w_svm, np.transpose(X_params[0]))
 
-            u, w_t = getParams(a, X_params, Y_params, rel_labels, col-2)
-
-            # get weights
-            w_svm = np.dot(np.transpose(a) * Y_params[:, col-2], X_params)
-
-            # get bias - ANY INSTANCE
-            b_svm = Y_params[0, col-2] - np.dot(w_svm, np.transpose(X_params[0]))
-
-            for idx_inst in range(X_test.shape[0]):
-                model_val_pos = returnModelVal(X_test[idx_inst], Y_test_initial[idx_inst,:], 1.0, u, w_t, b_svm, rel_labels)
-            exit()
-            y_predict = np.zeros(len(X_test))
-
-            for i in range(len(X_test)):
-                s = 0
-                for a_1, sv_y_1, sv_1 in zip(a, sv_y, sv_x):
-                    # print(self.kernel(X[i], sv))
-                    # s += a_1 * sv_y_1 * int_svm.rbf_kernel(X_test_3[i], sv_1)
-                    s += a_1 * sv_y_1 * int_svm.my_kernel(X_test_3[i], sv_1, rel_labels, Y_predict_2_out[i],
-                                                          Y_params[i])
-                y_predict[i] = s
-
-            # Intercept
-            b_int = 0
-            for n_p3 in range(len(a)):
-                b_int += sv_y[n_p3]
-                b_int -= np.sum(a * sv_y * K[ind[n_p3], sv])
-            b_int /= len(a)
-
-            Y_predict_3_out = np.sign(y_predict + b_int)
-
-            Y_predict_final[:, col_p3 - 3] = Y_predict_3_out
+                Y_prev = Y_test_initial
+                Y_curr = Y_test_initial
+                for iter_pr in range(5):
+                    for idx_inst_test in range(X_test.shape[0]):
+                        model_val_pos = returnModelVal(X_test[idx_inst_test], Y_prev[idx_inst_test,:], 1.0, u, w_t, b_svm, rel_labels)
+                        model_val_neg = returnModelVal(X_test[idx_inst_test], Y_prev[idx_inst_test, :], -1.0, u, w_t, b_svm,
+                                                       rel_labels)
+                        if model_val_pos > model_val_neg:
+                            Y_curr[idx_inst_test] = 1.
+                        else:
+                            Y_curr[idx_inst_test] = -1.
 
 
+                exit()
 
     # print("random: ", np.array(random_f1) / len(train_fold))
 
