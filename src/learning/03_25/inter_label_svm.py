@@ -141,7 +141,6 @@ def get_matrices(X, Y, curLabel, relLables, C=1000.1):
     h_2 = np.ones((X.shape[0], 1))*(C)
     h = cvxopt.matrix(np.vstack((h_1, h_2)))
 
-
     return K, P, q, A, G, h, b
 
 # solve the SVM for each label

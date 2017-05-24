@@ -63,6 +63,7 @@ def get_X_Y_data(docs, labels, w2v_feat, col, sen_length, vocab_dict, stop):
     X_words = [] # words for sentences
     X_w2v = [] # w2v features for sentences
     Y = []
+    Y_all = []
 
     count_words = len(vocab_dict)+1
     for row in range(len(docs)):
@@ -117,14 +118,16 @@ def get_X_Y_data(docs, labels, w2v_feat, col, sen_length, vocab_dict, stop):
             # X_w2v.append(np.mean(np.array(context_input), axis=0)) # for SVM - mean of words
             X_w2v.append(context_input)
 
-            if l == 1.:
+            if l[col] == 1.:
                 Y.append([0, 1])
             else:
                 Y.append([1, 0])
 
+            Y_all.append(l)
+
             row_instances.append(row)
 
-    return np.array(X_ind),  np.array(X_words), np.array(X_w2v), np.array(Y), row_instances, vocab_dict
+    return np.array(X_ind),  np.array(X_words), np.array(X_w2v), np.array(Y), np.array(Y_all), row_instances, vocab_dict
 
 
 def clusterDoc(featDocs, pref):
@@ -149,13 +152,13 @@ def main():
 
     stopwords_file = open('../../darkweb_data/Stop_Words.txt', 'r')
     stopwords = getStopWords(stopwords_file)
-    vocab_dict = pickle.load(open('../../darkweb_data/5_15/vocab_dict.pickle', 'rb'))
+    vocab_dict = pickle.load(open('../../darkweb_data/05/5_15/vocab_dict.pickle', 'rb'))
 
     """" PHASE 1 DATA """
     """  Corpora words have dimension 50  """
-    w2v_feat = pickle.load(open('../../darkweb_data/5_15/word2vec_train_model_d50_min2.pickle', 'rb'))
-    docs = pickle.load(open('../../darkweb_data/5_15/forum_40_label_input_docs.pickle', 'rb'))
-    labels = pickle.load(open('../../darkweb_data/5_15/forum_40_input_labels.pickle', 'rb'))
+    w2v_feat = pickle.load(open('../../darkweb_data/05/5_15/word2vec_train_model_d50_min2.pickle', 'rb'))
+    docs = pickle.load(open('../../darkweb_data/05/5_15/forum_40_label_input_docs.pickle', 'rb'))
+    labels = pickle.load(open('../../darkweb_data/05/5_15/forum_40_input_labels.pickle', 'rb'))
 
     Y_labels = np.array(labels)
     print(Y_labels.shape)
@@ -178,8 +181,8 @@ def main():
             map_test_indices[test_fold[idx_fold][idx_indicator]] = idx_indicator
 
         for col in range(2, 12):
-            X_ind, X_words, X_w2v, Y, row_indices, vocab_dict = \
-                get_X_Y_data(docs, Y_labels[:, col-2], w2v_feat, col-2, 30, vocab_dict, stopwords)
+            X_ind, X_words, X_w2v, Y, Y_all, row_indices, vocab_dict = \
+                get_X_Y_data(docs, Y_labels, w2v_feat, col-2, 30, vocab_dict, stopwords)
 
             # TODO: CHECK THIS PART - IT LOOKS CORRECT !!!!
             train_indices = []
@@ -195,6 +198,7 @@ def main():
             """ SET THE INSTANCES FOR THIS COLUMN"""
             X_train = X_ind[train_indices]
             Y_train = Y[train_indices]
+            Y_train_all = Y_all[train_indices]
 
             X_test = X_ind[test_indices]
             Y_test = Y[test_indices]
