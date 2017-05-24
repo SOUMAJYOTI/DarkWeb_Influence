@@ -193,35 +193,6 @@ def main():
             clf.fit(X_train, Y_train)
             Y_initial[:, col-2] = clf.predict(X_test)
 
-            # Y_test = Y_test_all[:, col - 2]
-
-            """ Sample test data """
-            # X_test_pos = []
-            # X_test_neg = []
-            # Y_test_initial_pos = []
-            # Y_test_initial_neg = []
-            # for idx in range(X_test.shape[0]):
-            #     if Y_test[idx] == 1.:
-            #         X_test_pos.append(X_test[idx])
-            #         Y_test_initial_pos.append(Y_initial[idx])
-            #     else:
-            #         X_test_neg.append(X_test[idx])
-            #         Y_test_initial_neg.append(Y_initial[idx])
-            #
-            # X_test_pos = np.array(X_test_pos)
-            # X_test_neg = np.array(X_test_neg)
-            #
-            # if X_test_pos.shape[0] < X_test_neg.shape[0]:
-            #     X_test_neg = X_test_neg[:X_test_pos.shape[0]]
-            #     Y_test_initial_neg = Y_test_initial_neg[:X_test_pos.shape[0]]
-            # else:
-            #     X_test_pos = X_test_pos[:X_test_neg.shape[0]]
-            #     Y_test_initial_pos = Y_test_initial_pos[:X_test_neg.shape[0]]
-            #
-            # Y_test_initial.append(np.concatenate((Y_test_initial_neg, Y_test_initial_pos), axis=0))
-            # X_test_new.append(np.concatenate((X_test_neg, X_test_pos), axis=0))
-            # Y_test_new.append(np.array([-1.] * X_test_neg.shape[0] + [1.] * X_test_pos.shape[0]))
-
         Y_curr = Y_initial
         Y_random = []
         for idx_r in range(X_test.shape[0]):
@@ -289,6 +260,8 @@ def main():
             b_svm = Y_params[0, col-2] - np.dot(w_svm, np.transpose(X_params[0]))
             b_l.append(b_svm)
 
+
+        """ Prune labels using beam search algorithm """
         Y_curr = np.zeros(Y_initial.shape)
         print("Testing: ")
         for iter_predict in range(5):

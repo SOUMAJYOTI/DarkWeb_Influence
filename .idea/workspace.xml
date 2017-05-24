@@ -24,59 +24,69 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="test_svm_corr.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test_svm_corr.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/neural_networks/05_19/test_svm_corr.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1628">
-              <caret line="312" column="34" selection-start-line="312" selection-start-column="34" selection-end-line="312" selection-end-column="34" />
+            <state relative-caret-position="194">
+              <caret line="295" column="30" selection-start-line="295" selection-start-column="30" selection-end-line="295" selection-end-column="30" />
               <folding>
                 <element signature="e#500#526#0" expanded="false" />
                 <element signature="e#572#630#0" expanded="false" />
                 <element signature="e#671#701#0" expanded="false" />
                 <element signature="e#746#809#0" expanded="false" />
                 <element signature="e#840#1330#0" expanded="false" />
-                <marker date="1495656932849" expanded="false" signature="3208:3760" ph="..." />
-                <marker date="1495656932849" expanded="false" signature="3815:4403" ph="..." />
+                <element signature="e#3213#3760#0" expanded="false" />
+                <marker date="1495665323147" expanded="false" signature="3815:4403" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="iter_multilabel.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/learning/04_07/iter_multilabel.py">
+      <file leaf-file-name="test_beam_search.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/neural_networks/05_19/test_beam_search.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="48" column="34" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="34" />
+            <state relative-caret-position="330">
+              <caret line="284" column="38" selection-start-line="284" selection-start-column="38" selection-end-line="284" selection-end-column="38" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#500#526#0" expanded="false" />
+                <element signature="e#572#630#0" expanded="false" />
+                <element signature="e#671#701#0" expanded="false" />
+                <element signature="e#746#809#0" expanded="false" />
+                <element signature="e#840#1330#0" expanded="false" />
+                <element signature="e#1477#3125#0" expanded="false" />
+                <element signature="e#3213#3760#0" expanded="false" />
+                <element signature="e#3820#4403#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="inter_label_svm.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/learning/04_07/inter_label_svm.py">
+      <file leaf-file-name="transductive_svm.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/learning/04_07/transductive_svm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="300" column="43" selection-start-line="296" selection-start-column="11" selection-end-line="300" selection-end-column="43" />
+            <state relative-caret-position="396">
+              <caret line="87" column="23" selection-start-line="87" selection-start-column="23" selection-end-line="87" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_simple.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/neural_networks/05_19/test_simple.py">
+      <file leaf-file-name="qns3vm.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/learning/04_07/qns3vm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="262" column="45" selection-start-line="262" selection-start-column="45" selection-end-line="262" selection-end-column="45" />
-              <folding>
-                <element signature="e#442#532#0" expanded="false" />
-                <element signature="e#568#791#0" expanded="false" />
-                <element signature="e#815#1159#0" expanded="false" />
-                <element signature="e#1377#4071#0" expanded="false" />
-                <element signature="e#4118#4588#0" expanded="false" />
-                <element signature="e#4624#5112#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="286">
+              <caret line="264" column="11" selection-start-line="264" selection-start-column="11" selection-end-line="264" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_crf.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/neural_networks/05_19/test_crf.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -97,9 +107,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/neural_networks/04_19/cnn_text.py" />
-        <option value="$PROJECT_DIR$/src/neural_networks/cnn_text/text_cnn.py" />
-        <option value="$PROJECT_DIR$/src/neural_networks/04_19/text_cnn.py" />
         <option value="$PROJECT_DIR$/src/neural_networks/cnn_text/train.py" />
         <option value="$PROJECT_DIR$/src/neural_networks/04_19/sentence_feat.py" />
         <option value="$PROJECT_DIR$/src/neural_networks/04_19/prepare_input.py" />
@@ -147,7 +154,10 @@
         <option value="$PROJECT_DIR$/src/learning/04_07/iter_multilabel.py" />
         <option value="$PROJECT_DIR$/src/preprocess_Data/prepareInput.py" />
         <option value="$PROJECT_DIR$/src/neural_networks/05_19/test_simple.py" />
+        <option value="$PROJECT_DIR$/src/neural_networks/05_19/test_crf.py" />
         <option value="$PROJECT_DIR$/src/neural_networks/05_19/test_svm_corr.py" />
+        <option value="$PROJECT_DIR$/src/neural_networks/05_19/test_beam_search.py" />
+        <option value="$PROJECT_DIR$/src/learning/04_07/transductive_svm.py" />
       </list>
     </option>
   </component>
@@ -275,6 +285,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="05_19" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DarkWeb_Influence" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DarkWeb_Influence" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="learning" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="04_07" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DarkWeb_Influence" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DarkWeb_Influence" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="learning" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -577,7 +627,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28979144" sideWeight="0.51354164" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2316136" sideWeight="0.48645833" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12294182" sideWeight="0.48645833" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.49791667" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -621,30 +671,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/neural_networks/04_22/keras_mnist.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/neural_networks/04_22/cnn_predict.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/learning/04_07/test_transductive.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="178" column="57" selection-start-line="175" selection-start-column="16" selection-end-line="178" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../Test-Codes/neural_netowrks_simple/nn-from-scratch.ipynb" />
-    <entry file="file://$PROJECT_DIR$/src/neural_networks/4_30.py" />
-    <entry file="file://$PROJECT_DIR$/src/neural_networks/04_22/transductive_svm.py" />
     <entry file="file://$PROJECT_DIR$/src/neural_networks/04_22/createFeat_Vocab.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="834">
@@ -990,18 +1016,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/neural_networks/05_19/test_crf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/neural_networks/05_19/test_svm_corr.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1628">
-          <caret line="312" column="34" selection-start-line="312" selection-start-column="34" selection-end-line="312" selection-end-column="34" />
+        <state relative-caret-position="194">
+          <caret line="295" column="30" selection-start-line="295" selection-start-column="30" selection-end-line="295" selection-end-column="30" />
           <folding>
             <element signature="e#500#526#0" expanded="false" />
             <element signature="e#572#630#0" expanded="false" />
             <element signature="e#671#701#0" expanded="false" />
             <element signature="e#746#809#0" expanded="false" />
             <element signature="e#840#1330#0" expanded="false" />
-            <marker date="1495656932849" expanded="false" signature="3208:3760" ph="..." />
-            <marker date="1495656932849" expanded="false" signature="3815:4403" ph="..." />
+            <element signature="e#3213#3760#0" expanded="false" />
+            <marker date="1495665323147" expanded="false" signature="3815:4403" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/learning/04_07/run_transductive_svm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="86" column="38" selection-start-line="86" selection-start-column="38" selection-end-line="86" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/learning/04_07/test_transductive.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/learning/04_07/qns3vm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="264" column="11" selection-start-line="264" selection-start-column="11" selection-end-line="264" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/learning/04_07/transductive_svm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="87" column="23" selection-start-line="87" selection-start-column="23" selection-end-line="87" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/neural_networks/05_19/test_beam_search.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="284" column="38" selection-start-line="284" selection-start-column="38" selection-end-line="284" selection-end-column="38" />
+          <folding>
+            <element signature="e#500#526#0" expanded="false" />
+            <element signature="e#572#630#0" expanded="false" />
+            <element signature="e#671#701#0" expanded="false" />
+            <element signature="e#746#809#0" expanded="false" />
+            <element signature="e#840#1330#0" expanded="false" />
+            <element signature="e#1477#3125#0" expanded="false" />
+            <element signature="e#3213#3760#0" expanded="false" />
+            <element signature="e#3820#4403#0" expanded="false" />
           </folding>
         </state>
       </provider>

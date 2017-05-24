@@ -8,7 +8,6 @@ from qns3vm import QN_S3VM_Dense
 from qns3vm import QN_S3VM_Sparse
 
 
-
 class SKTSVM(BaseEstimator):
     """
     Scikit-learn wrapper for transductive SVM (SKTSVM)
@@ -86,10 +85,10 @@ class SKTSVM(BaseEstimator):
         self.model.train()
 
         # probabilities by Platt scaling
-        # if self.probability:
-        #     self.plattlr = LR()
-        #     preds = self.model.getPredictions(labeledX)
-        #     self.plattlr.fit(preds.reshape(-1, 1), labeledy)
+        if self.probability:
+            self.plattlr = LR()
+            preds = self.model.getPredictions(labeledX)
+            self.plattlr.fit(preds.reshape(-1, 1), labeledy)
 
     def predict_proba(self, X):
         """Compute probabilities of possible outcomes for samples in X.
