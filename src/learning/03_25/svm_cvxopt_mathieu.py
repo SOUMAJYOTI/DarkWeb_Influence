@@ -4,6 +4,7 @@ import cvxopt
 import cvxopt.solvers
 import pandas as pd
 import pickle
+import sklearn.linear_model
 
 def linear_kernel(x1, x2):
     return np.dot(x1, x2)
@@ -20,7 +21,7 @@ def gaussian_kernel(x, y, sigma=5.0):
 
 
 class SVM(object):
-    def __init__(self, kernel=linear_kernel, C=None):
+    def __init__(self, kernel=rbf_kernel, C=None):
         self.kernel = kernel
         self.C = C
         if self.C is not None: self.C = float(self.C)
@@ -56,13 +57,15 @@ class SVM(object):
 
         # Lagrange multipliers
         a = np.ravel(solution['x'])
-        # print(a)
+        print(a)
         # Support vectors have non zero lagrange multipliers
-        sv = a > 1e-5
+        sv = a > 1e-3
         # print(a[sv])
         ind = np.arange(len(a))[sv]
         # print(X.shape)
+        print(a.shape)
         self.a = a[sv]
+        print(self.a.shape)
         self.sv = X[sv]
         self.sv_y = y[sv]
         # print("%d support vectors out of %d points" % (len(self.a), n_samples))
@@ -224,8 +227,8 @@ if __name__ == "__main__":
         clf = SVM()
         clf.fit(X_train, y_train)
 
-        y_predict = clf.predict(X_test)
-        correct = np.sum(y_predict == y_test)
+        # y_predict = clf.predict(X_test)
+        # correct = np.sum(y_predict == y_test)
         # print("%d out of %d predictions correct" % (correct, len(y_predict)))
 
         # plot_margin(X_train[y_train == 1], X_train[y_train == -1], clf)
@@ -239,11 +242,11 @@ if __name__ == "__main__":
         clf = SVM(polynomial_kernel)
         clf.fit(X_train, y_train)
 
-        y_predict = clf.predict(X_test)
-        correct = np.sum(y_predict == y_test)
-        print("%d out of %d predictions correct" % (correct, len(y_predict)))
-
-        plot_contour(X_train[y_train == 1], X_train[y_train == -1], clf)
+        # y_predict = clf.predict(X_test)
+        # correct = np.sum(y_predict == y_test)
+        # print("%d out of %d predictions correct" % (correct, len(y_predict)))
+        #
+        # plot_contour(X_train[y_train == 1], X_train[y_train == -1], clf)
 
 
     def test_soft():
@@ -255,44 +258,67 @@ if __name__ == "__main__":
         clf = SVM(C=1000.1)
         clf.fit(X_train, y_train)
 
-        y_predict = clf.predict(X_test)
-        correct = np.sum(y_predict == y_test)
-        print("%d out of %d predictions correct" % (correct, len(y_predict)))
+        # y_predict = clf.predict(X_test)
+        # correct = np.sum(y_predict == y_test)
+        # print("%d out of %d predictions correct" % (correct, len(y_predict)))
 
         # plot_contour(X_train[y_train == 1], X_train[y_train == -1], clf)
 
 
     def test_custom():
-        forumsData = pd.read_csv('../../../darkweb_data/3_25/Forum40_labels.csv', encoding="ISO-8859-1")
-        forumsData = forumsData.fillna(value=0)
-        Y_labels = np.array(forumsData.ix[:, 3:14])
-        for idx in range(Y_labels.shape[0]):
-            for idx_1 in range(Y_labels.shape[1]):
-                if Y_labels[idx, idx_1] == 0.:
-                    Y_labels[idx, idx_1] = -1.
+        # forumsData = pd.read_csv('../../../darkweb_data/3_25/Forum40_labels.csv', encoding="ISO-8859-1")
+        # forumsData = forumsData.fillna(value=0)
+        # Y_labels = np.array(forumsData.ix[:, 3:14])
+        # for idx in range(Y_labels.shape[0]):
+        #     for idx_1 in range(Y_labels.shape[1]):
+        #         if Y_labels[idx, idx_1] == 0.:
+        #             Y_labels[idx, idx_1] = -1.
+        #
+        #
+        # dir_feat = '../../../darkweb_data/3_25/features_d200/'
+        # X_inst, Y_inst = pickle.load(open(dir_feat + 'feat_label_' + str(3) + '.pickle', 'rb'))
+        # for idx_y in range(len(Y_inst)):
+        #     if Y_inst[idx_y] == 0:
+        #         Y_inst[idx_y] = -1.
+        #     else:
+        #         Y_inst[idx_y] = 1.
+        #
+        # X_inst = np.array(X_inst)
+        # X_inst = np.squeeze(X_inst, axis=(1,))
+        # Y_inst = np.array(Y_inst)
+        #
+        # X_train = X_inst[:380, :]
+        # Y_train = Y_inst[:380]
+        # # print(Y_train)
+        # X_test = X_inst[380:, :]
+        # Y_test = Y_inst[380:]
 
+        input_dir = '../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(0) + '/col_' + str(3) + '/'
+        X_train = pickle.load(open(input_dir + 'X_train_l.pickle', 'rb'))
+        Y_train_all = pickle.load(open(input_dir + 'Y_train_all.pickle', 'rb'))
+        X_test = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(3) +
+                                  '/' + 'X_test.pickle', 'rb'))
+        Y_test_all = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(3) +
+                                      '/' + 'Y_test_all.pickle', 'rb'))
+        for idx_ind1 in range(Y_train_all.shape[0]):
+            for idx_ind2 in range(Y_train_all.shape[1]):
+                if Y_train_all[idx_ind1, idx_ind2] == 0.:
+                    Y_train_all[idx_ind1, idx_ind2] = -1.
 
-        dir_feat = '../../../darkweb_data/3_25/features_d200/'
-        X_inst, Y_inst = pickle.load(open(dir_feat + 'feat_label_' + str(3) + '.pickle', 'rb'))
-        for idx_y in range(len(Y_inst)):
-            if Y_inst[idx_y] == 0:
-                Y_inst[idx_y] = -1.
-            else:
-                Y_inst[idx_y] = 1.
+        Y_train = Y_train_all[:, 1]
+        Y_test = Y_test_all[:, 1]
 
-        X_inst = np.array(X_inst)
-        X_inst = np.squeeze(X_inst, axis=(1,))
-        Y_inst = np.array(Y_inst)
-
-        X_train = X_inst[:380, :]
-        Y_train = Y_inst[:380]
-        # print(Y_train)
-        X_test = X_inst[380:, :]
-        Y_test = Y_inst[380:]
-
-        clf = SVM(kernel=rbf_kernel, C=1000.1)
+        clf = SVM(kernel=linear_kernel, C=1000.1)
         clf.fit(X_train, Y_train)
 
+        print(X_train)
+
+        y_predict = clf.predict(X_test)
+        correct = np.sum(y_predict == Y_test)
+        print("%d out of %d predictions correct" % (correct, len(y_predict)))
+
+        clf = sklearn.linear_model.LogisticRegression()
+        clf.fit(X_train, Y_train)
         y_predict = clf.predict(X_test)
         correct = np.sum(y_predict == Y_test)
         print("%d out of %d predictions correct" % (correct, len(y_predict)))

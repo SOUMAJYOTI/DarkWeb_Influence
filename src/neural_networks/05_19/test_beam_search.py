@@ -18,23 +18,8 @@ import matplotlib.pyplot as plt
 import cvxopt
 
 eta_1 = 1
-eta_2 = 5
-
-
-def linear_kernel(F_1, F_2):
-    return  np.dot(F_1.T, F_2)
-
-
-def rbf_kernel(F_1, F_2, sigma_2=1.0):
-    return np.exp(-0.5*np.linalg.norm(F_1 - F_2)**2 / sigma_2)
-
-
-def polynomial_kernel(x, y, p=3):
-    return (1 + np.dot(x, y)) ** p
-
-
-def gaussian_kernel(x, y, sigma=5.0):
-    return np.exp(-np.linalg.norm(x - y) ** 2 / (2 * (sigma ** 2)))
+eta_2 = 100
+MAX_ITER = 20
 
 
 def labelCorrMatrix(Y):
@@ -49,80 +34,10 @@ def labelCorrMatrix(Y):
 
             corr[l1, l2] /= Y.shape[0]
             # 0.02 is the threshold for the probability
-            if corr[l1, l2] < 0.03:
+            if corr[l1, l2] < 0.05:
                 corr[l1, l2] = 0.
 
     return corr
-
-
-# get the matrices required for cvxopt computation
-# This function is for each label
-def get_matrices(X, Y, curLabel, relLables, C=1000.1):
-    # relLabels - related labels to the current label in consideration
-    # eta_1 and eta_2 control the weights of inter-label
-    # and individual leable contributions to feature model $f$
-    # eta_1 = 1.
-    # eta_2 = 0.5
-
-    # the svm objective function is:
-    # \frac{1}{2} \alpha^T K \alpha + \alpha 1^T
-    # sb. to Y \alpha = 0
-    # and  \alpha < \lambda
-
-    # kernel matrix computations - matrix K
-    # K_ij = 4(eta_1^2 + eta_2^2*\sum_{t \in N_l} y_t^i y_t^j) \phi(I^i) \phi(I^j)
-    K = np.zeros((X.shape[0], X.shape[0]))
-    for idx_1 in range(X.shape[0]):
-        for idx_2 in range(X.shape[0]):
-            sum_inter_label = 0
-            for idx_r in range(relLables.shape[0]):
-                sum_inter_label += (Y[idx_1, relLables[idx_r]]*Y[idx_2, relLables[idx_r]])
-            K[idx_1, idx_2] = 1.*(eta_1**2 + (eta_2**2 * sum_inter_label)) * \
-                              (linear_kernel(X[idx_1], X[idx_2]) )
-            # K[idx_1, idx_2] = linear_kernel(X[idx_1, :], X[idx_2, :])
-            # print(K[idx_1, idx_2])
-
-    P = cvxopt.matrix(np.outer(Y[:, curLabel], Y[:, curLabel]) * K)
-
-    q = cvxopt.matrix(-np.ones((X.shape[0], 1)))
-
-    A = Y[:, curLabel]
-    A.shape = (1, A.shape[0])
-    A = cvxopt.matrix(A)
-
-    b = cvxopt.matrix([0.])
-
-    G_1 = np.diag(np.ones(X.shape[0]) * -1) #-np.identity(X.shape[0]) # first constraint: all \alpha >= 0
-    G_2 = np.identity(X.shape[0]) # second constraint: all \alpha <= \lambda
-    G = cvxopt.matrix(np.vstack((G_1, G_2)))
-
-    h_1 = np.zeros((X.shape[0], 1))
-    h_2 = np.ones((X.shape[0], 1))*(C)
-    h = cvxopt.matrix(np.vstack((h_1, h_2)))
-
-    return K, P, q, A, G, h, b
-
-
-# parameters for each label l \in L
-def getParams(a, X, Y, relLabels, curLabel):
-    # eta_1 = 1.
-    # eta_2 = 0.5
-
-    sum_u = np.zeros((1, X.shape[1]))
-    a.shape = (a.shape[0], 1)
-    for idx in range(a.shape[0]):
-        # print(a[idx, 0], Y[idx, 0])
-        sum_u += a[idx, 0]*Y[idx, curLabel] * X[idx, :]
-    sum_u = 2*eta_1*sum_u
-
-    sum_w = np.zeros((relLabels.shape[0], X.shape[1]))
-    for t in range(relLabels.shape[0]):
-        temp = 0
-        for idx in range(a.shape[0]):
-            temp += (a[idx, 0] * Y[idx, curLabel] * Y[idx, relLabels[t]] * X[idx, :])
-        sum_w[t] = 2*eta_2*temp
-
-    return sum_u, sum_w
 
 
 def returnModelVal(X, Y, y_fix, u, w, b, relLabels):
@@ -151,6 +66,131 @@ def returnModelVal(X, Y, y_fix, u, w, b, relLabels):
     return p_1 + p_2
 
 
+def beam_search(X, u, w, b, relLabels):
+    """
+    For each instance search for the best possible set of labels
+
+    :param X: Feature for instance
+    :param scores: Initial Label scores
+    :param hash_table: Label set for each score
+    :param u:
+    :param w:
+    :param b:
+    :param relLabels:
+    :return: Best possible set of labels
+    """
+    candidate_paths = [[] for _ in range(5)] # contains the candidate label sets
+    candidate_vals =[[] for _ in range(5)] # contains the label values (-1/1) for each candidate set
+    candidate_scores = [0. for _ in range(5)]
+    min_score = -1000
+
+    iter = 0
+    start = 0
+    while True:
+        # print("Iter: ", iter)
+        intermediate_paths = {}
+        # intermediate_paths_val = []
+        interim_scores = []
+        hash_table = {}
+
+        cnt_paths = 0
+        for cp in range(10):
+            labels_curr = candidate_paths[cp]
+            labels_val_curr = candidate_vals[cp]
+            Y = -np.ones((10, 1))
+            for lv in range(len(labels_val_curr)):
+                Y[labels_curr[lv]] = labels_val_curr[lv]
+
+            for l in range(10):
+                candidate_interim = labels_curr[:]
+                candidate_vals_interim = labels_val_curr[:]
+                if l in labels_curr:
+                    continue
+
+                temp_relLabels = []
+                for lc in range(len(labels_curr)):
+                    temp_relLabels.extend(relLabels[labels_curr[lc]])
+
+                # temp_relLabels = np.array(list(set(temp_relLabels)))
+                temp_relLabels = np.array(list(set(relLabels[l]).intersection(set(labels_curr))))
+                model_pos = returnModelVal(X, Y, 1.0, u[l], w[l], b[l], temp_relLabels)
+                candidate_interim.append(l)
+
+                # print(model_pos)
+                if model_pos < 0:
+                    # print('hello')
+                    candidate_vals_interim.append(-1)
+                    interim_scores.append(-model_pos)
+                else:
+                    candidate_vals_interim.append(1)
+                    interim_scores.append(model_pos)
+
+                hash_table[cnt_paths] = candidate_interim
+                intermediate_paths[cnt_paths] = candidate_vals_interim
+                cnt_paths += 1
+            # For the first iteration, just iterate once - all labels in one iteration
+            if start == 0:
+                start = 1
+                break
+
+        # print(interim_scores)
+        temp_paths = intermediate_paths
+        interim_zip = zip(intermediate_paths, interim_scores)
+        sorted_scores = sorted(interim_zip, key=lambda x: x[1], reverse=True)[:10]
+        intermediate_paths, scores = zip(*sorted_scores)
+
+        temp_cand = []
+        temp_val = []
+        for i in range(len(intermediate_paths)):
+            temp_cand.append(hash_table[intermediate_paths[i]])
+            temp_val.append(temp_paths[intermediate_paths[i]])
+
+        candidate_paths = temp_cand
+        candidate_vals = temp_val
+        # print(candidate_paths)
+        # print(candidate_vals)
+        # print(scores)
+        # candidate_scores = scores
+
+        # Exit condition from loop
+        # if max(interim_scores) < min_score:
+        #     break
+        #
+        # min_score = min(interim_scores)
+
+        if iter > 2:
+            break
+        iter += 1
+
+    candidate_dict = {}
+    for i in range(10):
+        for c in range(len(candidate_paths[i])):
+            if candidate_paths[i][c] not in candidate_dict:
+                candidate_dict[candidate_paths[i][c]] = candidate_vals[i][c]
+            elif candidate_dict[candidate_paths[i][c]] != 2:
+                if candidate_dict[candidate_paths[i][c]] != candidate_vals[i][c]:
+                    candidate_dict[candidate_paths[i][c]] = 2.
+
+    # print(candidate_dict)
+    return candidate_dict
+
+    # return candidate_paths[0], candidate_vals[0]
+    # Y_final = -np.ones((10, 1))
+    # intersect = candidate_paths[0]
+    # for cp in range(1, len(candidate_paths)):
+    #     intersect = list(set(candidate_paths[cp]).intersection(set(intersect)))
+    #
+    # for idx in range(len(intersect)):
+    #     Y_final[intersect[idx]] = 1.
+
+    # return Y_final.transpose()
+    # print(intersect)
+    # exit()
+        # print(candidate_paths[cp])
+        # print(candidate_vals[cp])
+
+
+
 def main():
     forumsData = pd.read_csv('../../../darkweb_data/05/5_15/Forum_40_labels.csv', encoding="ISO-8859-1")
 
@@ -171,128 +211,77 @@ def main():
 
     corr = labelCorrMatrix(np.array(Y_labels_new)) # CORRELATION MATRIX
 
-    for idx_fold in range(0, 5):
+    rel_labels = [[] for _ in range(10)]
+    for col in range(2, 12):
+        for l in range(corr.shape[0]):
+            if corr[col - 2, l] > 0. and ((col-2) != l):
+                rel_labels[col-2].append(l)
+
+        # print(col-2, rel_labels[col-2])
+
+    # rel_labels = np.array(rel_labels)
+    for idx_fold in range(0, 1):
         print('\n Fold: ', idx_fold)
         cnt_fold += 1
-        X_test = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v1/fold_' + str(idx_fold) +
+        X_test = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) +
                                   '/' + 'X_test.pickle', 'rb'))
-        Y_test_all = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v1/fold_' + str(idx_fold) +
+        Y_test_all = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) +
                                   '/' + 'Y_test_all.pickle', 'rb'))
-        Y_test_initial = []
-        X_test_new = []
-        Y_test_new = []
+
+        train_params = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v3/fold_'
+                                        + str(idx_fold) + '/train_params.pickle', 'rb'))
 
         """ Initial labels from prediction """
         Y_initial = np.zeros(Y_test_all.shape)
         for col in range(2, 12):
-            input_dir = '../../../darkweb_data/05/5_19/data_test/v1/fold_' + str(idx_fold) + '/col_' + str(col) + '/'
+            input_dir = '../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) + '/col_' + str(col) + '/'
             X_train = pickle.load(open(input_dir + 'X_train_l.pickle', 'rb'))
             Y_train = pickle.load(open(input_dir + 'Y_train_l.pickle', 'rb'))
 
             clf = svm.LinearSVC(penalty='l2')
             clf.fit(X_train, Y_train)
-            Y_initial[:, col-2] = clf.predict(X_test)
+            Y_initial[:, col - 2] = clf.predict(X_test)
 
-        Y_curr = Y_initial
+        print(sklearn.metrics.f1_score(Y_test_all[:, 6], Y_initial[:, 6]))
+        # print(Y_initial[0])
+        """ Prune labels using beam search algorithm """
+        # Y_curr = np.zeros(Y_initial.shape)
+        print("Testing: ")
+        # rel_labels = [list(range(10)) for _ in range(10)]
+        Y_pred = np.copy(Y_initial)
+        for idx_inst_test in range(1): #X_test.shape[0]):
+            # print("Actual: ", Y_test_all[idx_inst_test])
+            # print("Predicted: ", Y_initial[idx_inst_test])
+            val_dict = beam_search(X_test[idx_inst_test], train_params['u'], train_params['w'],
+                        train_params['b'], rel_labels)
+
+            for c in val_dict:
+                if val_dict[c] != 2.:
+                    Y_pred[idx_inst_test, c] = val_dict[c]
+
+            # print("Before beam", Y_initial[idx_inst_test])
+            # print("After beam: ", Y_pred[idx_inst_test])
+            # print(val)
+            # Y_pred[idx_inst_test,:] = val
+
+
+
+            # Y_random = np.array(Y_random)
+            # for col in range(2, 4):
+            #     print(sklearn.metrics.f1_score(Y_test_all[:, col-2], Y_curr[:, col-2]),
+            #           sklearn.metrics.f1_score(Y_test_all[:, col - 2], Y_random))
+            # # print(Y_initial)
+            # print(Y_initial)
+
+        # print(Y_test_all[:, 0])
+        # print(Y_pred[:, 0])
         Y_random = []
         for idx_r in range(X_test.shape[0]):
             Y_random.append(random.sample([-1., 1.], 1))
+        print(sklearn.metrics.f1_score(Y_test_all[:, 6], Y_pred[:, 6]),
+              sklearn.metrics.f1_score(Y_test_all[:, 6], Y_random))
 
-        Y_random = np.array(Y_random)
-        for col in range(2, 4):
-            print(sklearn.metrics.f1_score(Y_test_all[:, col - 2], Y_curr[:, col - 2]),
-                  sklearn.metrics.f1_score(Y_test_all[:, col - 2], Y_random))
-
-        u_l = []
-        b_l = []
-        w_l = []
-        # Iterated Conditional Modes
-        # for iter_predict in range(1):
-            # print('Iter: ', iter_predict)
-        print("Training: ")
-        for col in range(2, 12):
-            print("Col: ", col-2)
-            # print('Iter: {}, Column: {}'.format(iter_predict, col))
-            input_dir = '../../../darkweb_data/05/5_19/data_test/v1/fold_' + str(idx_fold) + '/col_' + str(
-                col) + '/'
-            X_train = pickle.load(open(input_dir + 'X_train_l.pickle', 'rb'))
-            Y_train_all = pickle.load(open(input_dir + 'Y_train_all.pickle', 'rb'))
-
-            # Y_test = Y_test_all[:, col - 2]
-
-            # X_test = X_test_new[col-2]
-            # Y_test = Y_test_new[col-2]
-            # Y_prev = Y_test_initial[col-2]
-
-            # X_train = Y
-            rel_labels = []
-            # TODO : CHECK THIS IF CORRECT !!!!!!!
-            for l in range(corr.shape[0]):
-                if True: #corr[col - 2, l] > 0. and ((col-2) != l):
-                    rel_labels.append(l)
-
-            rel_labels = np.array(rel_labels)
-
-            for idx_ind1 in range(Y_train_all.shape[0]):
-                for idx_ind2 in range(Y_train_all.shape[1]):
-                    if Y_train_all[idx_ind1, idx_ind2] == 0.:
-                        Y_train_all[idx_ind1, idx_ind2] = -1.
-
-            K, P, q, A, G, h, b_opt = get_matrices(X_train, Y_train_all, col - 2, rel_labels)
-
-            """ CVXOPT SOLUTION """
-            opt = cvxopt.solvers.options['show_progress'] = False
-            solution = cvxopt.solvers.qp(P, q, G, h, A, b_opt)
-            a = np.ravel(solution['x'])
-            sv = a > 1e-5
-            a = a[sv]
-
-            """ Get the parameters """
-            Y_params = Y_train_all[sv]
-            X_params = X_train[sv]
-
-            u, w_t = getParams(a, X_params, Y_params, rel_labels, col-2)
-            u_l.append(u)
-            w_l.append(w_t)
-            # get weights
-            w_svm = np.dot(np.transpose(a) * Y_params[:, col-2], X_params)
-            # get bias - ANY INSTANCE
-            b_svm = Y_params[0, col-2] - np.dot(w_svm, np.transpose(X_params[0]))
-            b_l.append(b_svm)
-
-
-        """ Prune labels using beam search algorithm """
-        Y_curr = np.zeros(Y_initial.shape)
-        print("Testing: ")
-        for iter_predict in range(5):
-            print('Iter: ', iter_predict)
-            for col in range(2, 12):
-                rel_labels = []
-                # TODO : CHECK THIS IF CORRECT !!!!!!!
-                for l in range(corr.shape[0]):
-                    if True: #corr[col - 2, l] > 0. and ((col - 2) != l):
-                        rel_labels.append(l)
-
-                rel_labels = np.array(rel_labels)
-                for idx_inst_test in range(X_test.shape[0]):
-                    model_val_pos = returnModelVal(X_test[idx_inst_test], Y_initial[idx_inst_test,:], 1.0, u_l[col-2]
-                                                   , w_l[col-2], b_l[col-2], rel_labels)
-                    model_val_neg = returnModelVal(X_test[idx_inst_test], Y_initial[idx_inst_test,:], -1.0, u_l[col-2]
-                                                   , w_l[col-2], b_l[col-2], rel_labels)
-                    if model_val_pos > model_val_neg:
-                        Y_curr[idx_inst_test, col-2] = 1.
-                    else:
-                        Y_curr[idx_inst_test, col-2] = -1.
-
-            Y_random = np.array(Y_random)
-            for col in range(2, 4):
-                print(sklearn.metrics.f1_score(Y_test_all[:, col-2], Y_curr[:, col-2]),
-                      sklearn.metrics.f1_score(Y_test_all[:, col - 2], Y_random))
-            # print(Y_initial)
-            Y_initial = Y_curr
-            # print(Y_initial)
-
-
+            #           sklearn.metrics.f1_score(Y_test_all[:, col - 2], Y_random))
 
     # print("random: ", np.array(random_f1) / len(train_fold))
 

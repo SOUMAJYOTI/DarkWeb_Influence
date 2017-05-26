@@ -77,9 +77,9 @@ def get_matrices(X, Y, curLabel, relLables, C=1000.1):
             sum_inter_label = 0
             for idx_r in range(relLables.shape[0]):
                 sum_inter_label += (Y[idx_1, relLables[idx_r]]*Y[idx_2, relLables[idx_r]])
-            K[idx_1, idx_2] = 1.*(eta_1**2 + (eta_2**2 * sum_inter_label)) * \
-                              (linear_kernel(X[idx_1], X[idx_2]) )
-            # K[idx_1, idx_2] = linear_kernel(X[idx_1, :], X[idx_2, :])
+            # K[idx_1, idx_2] = 1.*(eta_1**2 + (eta_2**2 * sum_inter_label)) * \
+            #                   (linear_kernel(X[idx_1], X[idx_2]) )
+            K[idx_1, idx_2] = linear_kernel(X[idx_1, :], X[idx_2, :])
             # print(K[idx_1, idx_2])
 
     P = cvxopt.matrix(np.outer(Y[:, curLabel], Y[:, curLabel]) * K)
@@ -174,9 +174,9 @@ def main():
     for idx_fold in range(0, 5):
         print('\n Fold: ', idx_fold)
         cnt_fold += 1
-        X_test = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v1/fold_' + str(idx_fold) +
+        X_test = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) +
                                   '/' + 'X_test.pickle', 'rb'))
-        Y_test_all = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v1/fold_' + str(idx_fold) +
+        Y_test_all = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) +
                                   '/' + 'Y_test_all.pickle', 'rb'))
         Y_test_initial = []
         X_test_new = []
@@ -185,7 +185,7 @@ def main():
         """ Initial labels from prediction """
         Y_initial = np.zeros(Y_test_all.shape)
         for col in range(2, 12):
-            input_dir = '../../../darkweb_data/05/5_19/data_test/v1/fold_' + str(idx_fold) + '/col_' + str(col) + '/'
+            input_dir = '../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) + '/col_' + str(col) + '/'
             X_train = pickle.load(open(input_dir + 'X_train_l.pickle', 'rb'))
             Y_train = pickle.load(open(input_dir + 'Y_train_l.pickle', 'rb'))
 
@@ -242,7 +242,7 @@ def main():
         for col in range(2, 12):
             print("Col: ", col-2)
             # print('Iter: {}, Column: {}'.format(iter_predict, col))
-            input_dir = '../../../darkweb_data/05/5_19/data_test/v1/fold_' + str(idx_fold) + '/col_' + str(
+            input_dir = '../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) + '/col_' + str(
                 col) + '/'
             X_train = pickle.load(open(input_dir + 'X_train_l.pickle', 'rb'))
             Y_train_all = pickle.load(open(input_dir + 'Y_train_all.pickle', 'rb'))
@@ -257,7 +257,7 @@ def main():
             rel_labels = []
             # TODO : CHECK THIS IF CORRECT !!!!!!!
             for l in range(corr.shape[0]):
-                if True: #corr[col - 2, l] > 0. and ((col-2) != l):
+                if col-2 != l: #corr[col - 2, l] > 0. and ((col-2) != l):
                     rel_labels.append(l)
 
             rel_labels = np.array(rel_labels)
@@ -273,9 +273,12 @@ def main():
             opt = cvxopt.solvers.options['show_progress'] = False
             solution = cvxopt.solvers.qp(P, q, G, h, A, b_opt)
             a = np.ravel(solution['x'])
-            sv = a > 1e-5
+            # print(a.shape)
+            # print(a)
+            sv = a > 1e-1
             a = a[sv]
-
+            # print(a.shape)
+            # exit()
             """ Get the parameters """
             Y_params = Y_train_all[sv]
             X_params = X_train[sv]
@@ -289,7 +292,12 @@ def main():
             b_svm = Y_params[0, col-2] - np.dot(w_svm, np.transpose(X_params[0]))
             b_l.append(b_svm)
 
-        Y_curr = np.zeros(Y_initial.shape)
+        train_params = {'u': u_l, 'w': w_l, 'b': b_l}
+        pickle.dump(train_params, open('../../../darkweb_data/05/5_19/data_test/v3/fold_'
+                                       + str(idx_fold) + '/train_params.pickle', 'wb'))
+
+        exit()
+        Y_curr = Y_initial
         print("Testing: ")
         for iter_predict in range(5):
             print('Iter: ', iter_predict)
@@ -302,6 +310,7 @@ def main():
 
                 rel_labels = np.array(rel_labels)
                 for idx_inst_test in range(X_test.shape[0]):
+                    # print(Y_initial[idx_inst_test,:])
                     model_val_pos = returnModelVal(X_test[idx_inst_test], Y_initial[idx_inst_test,:], 1.0, u_l[col-2]
                                                    , w_l[col-2], b_l[col-2], rel_labels)
                     model_val_neg = returnModelVal(X_test[idx_inst_test], Y_initial[idx_inst_test,:], -1.0, u_l[col-2]
@@ -312,7 +321,7 @@ def main():
                         Y_curr[idx_inst_test, col-2] = -1.
 
             Y_random = np.array(Y_random)
-            for col in range(2, 4):
+            for col in range(2, 12):
                 print(sklearn.metrics.f1_score(Y_test_all[:, col-2], Y_curr[:, col-2]),
                       sklearn.metrics.f1_score(Y_test_all[:, col - 2], Y_random))
             # print(Y_initial)

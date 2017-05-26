@@ -64,6 +64,7 @@ def calculateTfIdf(docs):
         bloblist.append(tb(doc_str))
 
     ScoresDoc = [{} for _ in range(len(docs))]
+    scores_dict = {}
     for i, blob in enumerate(bloblist):
         # print("Top words in document {}".format(i + 1))
         scores = {word: tfidf(word, blob, bloblist) for word in blob.words}
@@ -75,13 +76,30 @@ def calculateTfIdf(docs):
     return ScoresDoc
 
 
+def getSentenceSplits(docs, stop):
+    docs_split = []
+    for line in docs:
+        # print(line)
+        sent = line[:len(line)-3]
+        words = sent.split(' ')
+
+        words_filter = []
+        for w in range(len(words)):
+            if words[w] in stop:
+                continue
+            words_filter.append(words[w])
+
+        docs_split.append(words_filter)
+
+    return docs_split
+
 if __name__ == "__main__":
 
     print('Load files....')
-    output_dir = '../../darkweb_data/4_23/'
+    # output_dir = '../../darkweb_data/4_23/'
 
     # Stopwords
-    stopwords_file = open('../../darkweb_data/3_25/Stop_Words.txt', 'r')
+    stopwords_file = open('../../darkweb_data/Stop_Words.txt', 'r')
     stopwords = getStopWords(stopwords_file)
 
     """ Unlabeled samples part"""
@@ -99,14 +117,18 @@ if __name__ == "__main__":
     #                                  + str(idx) + '.pickle', 'wb'))
 
     """  Labeled examples part """
-    inputData = open('../../darkweb_data/4_23/partitionOut_sg_3.txt', 'r')
+    # inputData = open('../../darkweb_data/4_23/partitionOut_sg_3.txt', 'r')
+    #
+    # print('Start partitioning...')
+    # docs = getInputPartitionedPhrases(inputData, stopwords)
+    # print(len(docs))
+    # tfidfScore = calculateTfIdf(docs)
+    # print(len(tfidfScore))
+    #
+    # pickle.dump(tfidfScore, open('../../darkweb_data/4_23/tfidf_f40_labels.pickle', 'wb'))
 
-    print('Start partitioning...')
-    docs = getInputPartitionedPhrases(inputData, stopwords)
-    print(len(docs))
-    tfidfScore = calculateTfIdf(docs)
-    print(len(tfidfScore))
+    # tfidfScore = pickle.load(open('../../darkweb_data/04/4_23/tfidf_f40_labels.pickle', 'rb'))
 
-    pickle.dump(tfidfScore, open('../../darkweb_data/4_23/tfidf_f40_labels.pickle', 'wb'))
-
-
+    inputData = open('../../darkweb_data/05/5_19/forum40_sentences.txt', 'r')
+    sent_splits = getSentenceSplits(inputData, stopwords)
+    tfidfScore = calculateTfIdf(sent_splits)
