@@ -68,17 +68,17 @@ def segmentPosts_Labels(pnames):
 
 if __name__ == "__main__":
     # forumsData = pd.read_csv('../../../darkweb_data/2_2/Forumdata_40.csv', encoding="ISO-8859-1")
-    forumsData = pd.read_csv('../../../darkweb_data/2_28/Forum40_labels.csv', encoding="ISO-8859-1")
+    # forumsData = pd.read_csv('../../../darkweb_data/2_28/Forum40_labels.csv', encoding="ISO-8859-1")
     # forumsData = forumsData[np.isfinite(forumsData['scrapedDate'])]
 
-    postures_names = forumsData.columns.values[3:15]
-
+    # postures_names = forumsData.columns.values[3:15]
+    #
     sentences = []
-    forumsData = forumsData.fillna(0)
-    corpus = open('../../../darkweb_data/2_28/corpus_forums_sentences.txt', 'r')
+    # forumsData = forumsData.fillna(0)
+    corpus = open('../../../darkweb_data/05/5_31/forums_all_preTrain_sent.txt', 'r')
     lineId = 1
     for line in corpus:
-        line = line[:len(line)-1]
+        line = line[:len(line)-3]
         sentence = line.split(' ')
         labeled_sent = models.doc2vec.TaggedDocument(
                 words=sentence, tags=["SENT_%s" % lineId])
@@ -94,9 +94,11 @@ if __name__ == "__main__":
     # print(len(doc_phrases))
 
     print('Start of doc2vec...')
-    model = gensim.models.Doc2Vec(sentences, dm=0, alpha=0.025, size=100, min_alpha=0.025, min_count=0)
+    model = gensim.models.Doc2Vec(sentences, dm=0, alpha=0.025, size=50, min_alpha=0.025, min_count=0)
 
-    model.save('../../../darkweb_data/2_28/trained_doc2vec_forums_sentences_d100.model')
+    pickle.dump(model, open('../../../darkweb_data/05/5_31/doc2vec_sent_d50.pickle', 'wb'))
+    # model.save('../../../darkweb_data/05/5_31/doc2vec_sent_d50.pickle')
+
     # print(model.docvecs['SENT_1'])
         # sentences = getSentences()
 

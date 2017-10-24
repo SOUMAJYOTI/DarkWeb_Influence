@@ -11,7 +11,7 @@ from scipy.sparse.csgraph import minimum_spanning_tree
 from pystruct.learners import OneSlackSSVM
 from pystruct.models import MultiLabelClf
 from pystruct.datasets import load_scene
-
+import sklearn.metrics
 
 def chow_liu_tree(y_):
     # compute mutual information using sklearn
@@ -25,54 +25,43 @@ def chow_liu_tree(y_):
     edges.sort(axis=1)
     return edges
 
+cnt_fold = 0
+for idx_fold in range(0, 1):
+    print('\n Fold: ', idx_fold)
+    cnt_fold += 1
+    X_test = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) +
+                              '/' + 'X_test.pickle', 'rb'))
+    Y_test_all = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) +
+                                  '/' + 'Y_test_all.pickle', 'rb'))
+    Y_test_initial = []
+    X_test_new = []
+    Y_test_new = []
 
-data, labels = pickle.load(open('../../../darkweb_data/2_28/forums40_phrases_train_test.pickle', 'rb'))
-train_length = int(0.9 * len(data))
-test_length = len(data) - train_length
+    """ Initial labels from prediction """
+    Y_initial = np.zeros(Y_test_all.shape)
+    for col in range(2, 12):
+        input_dir = '../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) + '/col_' + str(col) + '/'
+        X_train = pickle.load(open(input_dir + 'X_train_l.pickle', 'rb'))
+        Y_train = pickle.load(open(input_dir + 'Y_train_l.pickle', 'rb'))
+        Y_train_all = pickle.load(open(input_dir + 'Y_train_all.pickle', 'rb'))
 
-X_train, X_test = np.array(data[:train_length]), np.array(data[train_length:])
-y_train, y_test = np.array(labels[:train_length]), np.array(labels[train_length:])
+        Y_train_all = Y_train_all.astype(int)
 
-print(y_train[0])
+        independent_model = MultiLabelClf(inference_method='unary')
+        independent_ssvm = OneSlackSSVM(independent_model, C=.1, tol=0.01)
 
-# scene = load_scene()
-# X_train, X_test = scene['X_train'], scene['X_test']
-# y_train, y_test = scene['y_train'], scene['y_test']
+        print("fitting independent model...")
+        independent_ssvm.fit(X_train, Y_train_all)
+        Y_pred = np.array(independent_ssvm.predict(X_test))
 
-# print(y_train[0])
-n_labels = y_train.shape[1]
+        Y_initial[:, col-2] = Y_pred[:, col-2]
 
-full = np.vstack([x for x in itertools.combinations(range(n_labels), 2)])
-tree = chow_liu_tree(y_train)
+    for idx in range(Y_test_all.shape[0]):
+        for idx1 in range(Y_test_all.shape[1]):
+            if Y_test_all[idx, idx1] == -1.:
+                Y_test_all[idx, idx1] = 0.
 
-full_model = MultiLabelClf(edges=full, inference_method='qpbo')
-independent_model = MultiLabelClf(inference_method='unary')
-tree_model = MultiLabelClf(edges=tree, inference_method="max-product")
-
-full_ssvm = OneSlackSSVM(full_model, inference_cache=50, C=.1, tol=0.01)
-
-tree_ssvm = OneSlackSSVM(tree_model, inference_cache=50, C=.1, tol=0.01)
-
-independent_ssvm = OneSlackSSVM(independent_model, C=.1, tol=0.01)
-
-print("fitting independent model...")
-independent_ssvm.fit(X_train, y_train)
-print("fitting full model...")
-full_ssvm.fit(X_train, y_train)
-print("fitting tree model...")
-tree_ssvm.fit(X_train, y_train)
-
-print("Training loss independent model: %f"
-      % hamming_loss(y_train, np.vstack(independent_ssvm.predict(X_train))))
-print("Test loss independent model: %f"
-      % hamming_loss(y_test, np.vstack(independent_ssvm.predict(X_test))))
-
-print("Training loss tree model: %f"
-      % hamming_loss(y_train, np.vstack(tree_ssvm.predict(X_train))))
-print("Test loss tree model: %f"
-      % hamming_loss(y_test, np.vstack(tree_ssvm.predict(X_test))))
-
-print("Training loss full model: %f"
-      % hamming_loss(y_train, np.vstack(full_ssvm.predict(X_train))))
-print("Test loss full model: %f"
-      % hamming_loss(y_test, np.vstack(full_ssvm.predict(X_test))))
+    Y_test_all = Y_test_all.astype(int)
+    # print(Y_initial[:10])
+    for col in range(2, 12):
+        print(sklearn.metrics.f1_score(Y_test_all[:, col-2], Y_initial[:, col-2]))

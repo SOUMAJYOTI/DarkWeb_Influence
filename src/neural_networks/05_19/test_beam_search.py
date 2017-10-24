@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 import cvxopt
 
 eta_1 = 1
-eta_2 = 100
+eta_2 = 5
 MAX_ITER = 20
 
 
@@ -56,11 +56,14 @@ def returnModelVal(X, Y, y_fix, u, w, b, relLabels):
     # eta_2 = 0.5
     # X.shape = (X.shape[0], 1)
 
-    p_1 = eta_1*y_fix*(np.dot(u, np.transpose(X)) + b)
+    # print(u.shape, X.shape)
+    # exit()
+    p_1 = eta_1*y_fix*(np.dot(u, X) + b)
 
     p_2 = 0
     for t in range(relLabels.shape[0]):
-        p_2 += (y_fix * Y[relLabels[t]] * np.dot(w[t], X))
+        # print(t, w[t])
+        p_2 += (y_fix * Y[relLabels[t]]) # * np.dot(w, X))
     p_2 = p_2*eta_2
 
     return p_1 + p_2
@@ -79,9 +82,10 @@ def beam_search(X, u, w, b, relLabels):
     :param relLabels:
     :return: Best possible set of labels
     """
-    candidate_paths = [[] for _ in range(5)] # contains the candidate label sets
-    candidate_vals =[[] for _ in range(5)] # contains the label values (-1/1) for each candidate set
-    candidate_scores = [0. for _ in range(5)]
+
+    candidate_paths = [[] for _ in range(10)] # contains the candidate label sets
+    candidate_vals =[[] for _ in range(10)] # contains the label values (-1/1) for each candidate set
+    candidate_scores = [0. for _ in range(10)]
     min_score = -1000
 
     iter = 0
@@ -94,9 +98,10 @@ def beam_search(X, u, w, b, relLabels):
         hash_table = {}
 
         cnt_paths = 0
-        for cp in range(10):
+        for cp in range(5):
             labels_curr = candidate_paths[cp]
             labels_val_curr = candidate_vals[cp]
+            scores_curr = candidate_scores[cp]
             Y = -np.ones((10, 1))
             for lv in range(len(labels_val_curr)):
                 Y[labels_curr[lv]] = labels_val_curr[lv]
@@ -104,8 +109,8 @@ def beam_search(X, u, w, b, relLabels):
             for l in range(10):
                 candidate_interim = labels_curr[:]
                 candidate_vals_interim = labels_val_curr[:]
-                if l in labels_curr:
-                    continue
+                # if l in labels_curr:
+                #     continue
 
                 temp_relLabels = []
                 for lc in range(len(labels_curr)):
@@ -113,10 +118,9 @@ def beam_search(X, u, w, b, relLabels):
 
                 # temp_relLabels = np.array(list(set(temp_relLabels)))
                 temp_relLabels = np.array(list(set(relLabels[l]).intersection(set(labels_curr))))
-                model_pos = returnModelVal(X, Y, 1.0, u[l], w[l], b[l], temp_relLabels)
+                model_pos = returnModelVal(X, Y, 1.0, u[l], u[l], b[l][0], np.array(temp_relLabels))
                 candidate_interim.append(l)
 
-                # print(model_pos)
                 if model_pos < 0:
                     # print('hello')
                     candidate_vals_interim.append(-1)
@@ -133,10 +137,9 @@ def beam_search(X, u, w, b, relLabels):
                 start = 1
                 break
 
-        # print(interim_scores)
         temp_paths = intermediate_paths
         interim_zip = zip(intermediate_paths, interim_scores)
-        sorted_scores = sorted(interim_zip, key=lambda x: x[1], reverse=True)[:10]
+        sorted_scores = sorted(interim_zip, key=lambda x: x[1], reverse=True)[:5]
         intermediate_paths, scores = zip(*sorted_scores)
 
         temp_cand = []
@@ -144,11 +147,12 @@ def beam_search(X, u, w, b, relLabels):
         for i in range(len(intermediate_paths)):
             temp_cand.append(hash_table[intermediate_paths[i]])
             temp_val.append(temp_paths[intermediate_paths[i]])
+            # candidate_scores[i] += scores[i]
 
         candidate_paths = temp_cand
         candidate_vals = temp_val
-        # print(candidate_paths)
-        # print(candidate_vals)
+        print(candidate_paths)
+        print(candidate_vals)
         # print(scores)
         # candidate_scores = scores
 
@@ -158,12 +162,12 @@ def beam_search(X, u, w, b, relLabels):
         #
         # min_score = min(interim_scores)
 
-        if iter > 2:
-            break
         iter += 1
+        if iter > 5:
+            break
 
     candidate_dict = {}
-    for i in range(10):
+    for i in range(5):
         for c in range(len(candidate_paths[i])):
             if candidate_paths[i][c] not in candidate_dict:
                 candidate_dict[candidate_paths[i][c]] = candidate_vals[i][c]
@@ -171,24 +175,9 @@ def beam_search(X, u, w, b, relLabels):
                 if candidate_dict[candidate_paths[i][c]] != candidate_vals[i][c]:
                     candidate_dict[candidate_paths[i][c]] = 2.
 
-    # print(candidate_dict)
+    print(candidate_dict)
+    exit()
     return candidate_dict
-
-    # return candidate_paths[0], candidate_vals[0]
-    # Y_final = -np.ones((10, 1))
-    # intersect = candidate_paths[0]
-    # for cp in range(1, len(candidate_paths)):
-    #     intersect = list(set(candidate_paths[cp]).intersection(set(intersect)))
-    #
-    # for idx in range(len(intersect)):
-    #     Y_final[intersect[idx]] = 1.
-
-    # return Y_final.transpose()
-    # print(intersect)
-    # exit()
-        # print(candidate_paths[cp])
-        # print(candidate_vals[cp])
-
 
 
 def main():
@@ -223,37 +212,73 @@ def main():
     for idx_fold in range(0, 1):
         print('\n Fold: ', idx_fold)
         cnt_fold += 1
-        X_test = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) +
+        X_test = pickle.load(open('../../../darkweb_data/05/5_31/data_test/v1/fold_' + str(idx_fold) +
                                   '/' + 'X_test.pickle', 'rb'))
-        Y_test_all = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) +
+        Y_test_all = pickle.load(open('../../../darkweb_data/05/5_31/data_test/v1/fold_' + str(idx_fold) +
                                   '/' + 'Y_test_all.pickle', 'rb'))
 
-        train_params = pickle.load(open('../../../darkweb_data/05/5_19/data_test/v3/fold_'
-                                        + str(idx_fold) + '/train_params.pickle', 'rb'))
+        #
+        # print(np.array(train_params['w']).shape)
 
         """ Initial labels from prediction """
         Y_initial = np.zeros(Y_test_all.shape)
+        train_params_coeff = []
+        train_params_intercept = []
         for col in range(2, 12):
-            input_dir = '../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) + '/col_' + str(col) + '/'
+            input_dir = '../../../darkweb_data/05/5_31/data_test/v1/fold_' + str(idx_fold) + '/col_' + str(col) + '/'
             X_train = pickle.load(open(input_dir + 'X_train_l.pickle', 'rb'))
             Y_train = pickle.load(open(input_dir + 'Y_train_l.pickle', 'rb'))
+
+            train_params = pickle.load(open('../../../darkweb_data/05/5_31/data_test/v1/fold_'
+                                            + str(idx_fold) + '/train_params_' + str(col) + '.pickle', 'rb'))
+            train_params_coeff.append(train_params['u'])
+            train_params_intercept.append(train_params['b'])
 
             clf = svm.LinearSVC(penalty='l2')
             clf.fit(X_train, Y_train)
             Y_initial[:, col - 2] = clf.predict(X_test)
 
-        print(sklearn.metrics.f1_score(Y_test_all[:, 6], Y_initial[:, 6]))
+        print(sklearn.metrics.f1_score(Y_test_all[:, 0], Y_initial[:, 0]))
         # print(Y_initial[0])
         """ Prune labels using beam search algorithm """
         # Y_curr = np.zeros(Y_initial.shape)
         print("Testing: ")
         # rel_labels = [list(range(10)) for _ in range(10)]
         Y_pred = np.copy(Y_initial)
-        for idx_inst_test in range(1): #X_test.shape[0]):
+        for idx_inst_test in range(X_test.shape[0]):
             # print("Actual: ", Y_test_all[idx_inst_test])
             # print("Predicted: ", Y_initial[idx_inst_test])
-            val_dict = beam_search(X_test[idx_inst_test], train_params['u'], train_params['w'],
-                        train_params['b'], rel_labels)
+            # print(train_params['u'])
+            Y_test_initial = []
+            """ Sample test data """
+            # X_test_pos = []
+            # X_test_neg = []
+            # Y_test_initial_pos = []
+            # Y_test_initial_neg = []
+            # for idx in range(X_test.shape[0]):
+            #     if Y_test_all[:, col-2][idx] == 1.:
+            #         X_test_pos.append(X_test[idx])
+            #         Y_test_initial_pos.append(Y_initial[idx])
+            #     else:
+            #         X_test_neg.append(X_test[idx])
+            #         Y_test_initial_neg.append(Y_initial[idx])
+            #
+            # X_test_pos = np.array(X_test_pos)
+            # X_test_neg = np.array(X_test_neg)
+            #
+            # if X_test_pos.shape[0] < X_test_neg.shape[0]:
+            #     X_test_neg = X_test_neg[:X_test_pos.shape[0]]
+            #     Y_test_initial_neg = Y_test_initial_neg[:X_test_pos.shape[0]]
+            # else:
+            #     X_test_pos = X_test_pos[:X_test_neg.shape[0]]
+            #     Y_test_initial_pos = Y_test_initial_pos[:X_test_neg.shape[0]]
+            #
+            # Y_test_initial.append(np.concatenate((Y_test_initial_neg, Y_test_initial_pos), axis=0))
+            # X_test_new.append(np.concatenate((X_test_neg, X_test_pos), axis=0))
+            # Y_test_new.append(np.array([-1.] * X_test_neg.shape[0] + [1.] * X_test_pos.shape[0]))
+
+            val_dict = beam_search(X_test[idx_inst_test], train_params_coeff, train_params_coeff,
+                        train_params_intercept, rel_labels)
 
             for c in val_dict:
                 if val_dict[c] != 2.:
@@ -278,8 +303,9 @@ def main():
         Y_random = []
         for idx_r in range(X_test.shape[0]):
             Y_random.append(random.sample([-1., 1.], 1))
-        print(sklearn.metrics.f1_score(Y_test_all[:, 6], Y_pred[:, 6]),
-              sklearn.metrics.f1_score(Y_test_all[:, 6], Y_random))
+        print(sklearn.metrics.f1_score(Y_test_all[:, 0], Y_initial[:, 0]),
+            sklearn.metrics.f1_score(Y_test_all[:, 0], Y_pred[:, 0]),
+              sklearn.metrics.f1_score(Y_test_all[:, 0], Y_random))
 
             #           sklearn.metrics.f1_score(Y_test_all[:, col - 2], Y_random))
 

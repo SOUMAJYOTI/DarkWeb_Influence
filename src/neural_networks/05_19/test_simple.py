@@ -26,17 +26,6 @@ def getStopWords(data):
     return words
 
 
-def getFolds_LeaveOneOut(Y):
-    loo = LeaveOneOut()
-    train_folds = []
-    test_folds = []
-    for train_index, test_index in loo.split(Y):
-        train_folds.append(train_index)
-        test_folds.append(test_index)
-
-    return train_folds, test_folds
-
-
 def getFolds(Y):
     # X = np.zeros(Y.shape[0])
 
@@ -76,6 +65,7 @@ def calculateTfIdf(docs):
             # print("Word: {}, TF-IDF: {}".format(word, round(score, 5)))
 
     return ScoresDoc
+
 
 # Schema for instances for recognition
 # [0, 1] - positive instance
@@ -130,6 +120,7 @@ def get_X_Y_data(docs, labels, w2v_feat, col, sen_length, vocab_dict, stop, tfid
             for idx_pad in range(10-len_sent):
                 sorted_tfidf.append(0.)
 
+            print(words_filter)
             X_tfidf.append(sorted_tfidf)
             X_ind.append(sent_index)
             X_words.append(words_filter)
@@ -234,13 +225,14 @@ def main():
     cnt_fold = 0
     random_f1 = [0. for _ in range(Y_labels.shape[1])]
         # print(X_ind.shape, X_words.shape, X_w2v.shape, Y.shape)
-    for idx_fold in range(0, len(train_fold)): #range(len(train_fold)):
+    for idx_fold in range(0, 1): #len(train_fold)): #range(len(train_fold)):
         cnt_fold += 1
 
-        for col in range(2, 12):
+        for col in range(2, 3):
             print('Fold: {}, Col: {}'.format(idx_fold, col), '\n')
             X_ind, X_words, X_tfidf, X_w2v, Y, Y_all, row_indices, vocab_dict = \
                 get_X_Y_data(docs, Y_labels, w2v_feat, col-2, 30, vocab_dict, stopwords, tfidfScore)
+
 
             # TODO: CHECK THIS PART - IT LOOKS CORRECT !!!!
             train_indices = []
@@ -257,11 +249,14 @@ def main():
             for idx_indicator in range(len(test_fold[idx_fold])):
                 map_test_indices[test_fold[idx_fold][idx_indicator]] = idx_indicator
             #
-            # X_count_words = []
-            # for idx_c in range(X_words.shape[0]):
-            #     X_count_words.append([len(list(set(X_words[idx_c])))])
-            #
-            # X_count_words = np.array(X_count_words)
+            X_count_words = []
+            for idx_c in range(X_words.shape[0]):
+                X_count_words.append([len(list(set(X_words[idx_c])))])
+
+            X_count_words = np.array(X_count_words)
+
+            X_all = np.concatenate((X_w2v, X_tfidf), axis=1)
+            X_all = np.concatenate((X_all, X_count_words), axis=1)
             # # print(X_count_words)
             #
             # X_count_chars = []
@@ -277,11 +272,11 @@ def main():
             # X_count = X_count_chars
 
             """ SET THE INSTANCES FOR THIS COLUMN"""
-            X_train = X_tfidf[train_indices]
+            X_train = X_all[train_indices]
             Y_train = Y[train_indices]
             Y_train_all = Y_all[train_indices]
 
-            X_test = X_tfidf[test_indices]
+            X_test = X_all[test_indices]
             Y_test = Y[test_indices]
             Y_test_all = Y_all[test_indices]
 
@@ -351,7 +346,7 @@ def main():
 
             X_train_final = np.concatenate((X_train_neg, X_train_pos), axis=0)
             Y_train_final = np.array([-1.] * X_train_neg.shape[0] + [1.] * X_train_pos.shape[0])
-            Y_all_final = np.concatenate((Y_all_pos, Y_all_neg), axis=0)
+            Y_all_final = np.concatenate((Y_all_neg, Y_all_pos), axis=0)
 
             # TODO: try DBSCAN or affinity propagation for clustering subsamples
             #  from the negative samples
@@ -393,21 +388,21 @@ def main():
             # print(sklearn.metrics.f1_score(Y_test_final, Y_predict), sklearn.metrics.f1_score(Y_test_final, Y_random))
 
             #  Write the samples to disk
-            output_dir = '../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) + '/col_' + str(col) + '/'
+            output_dir = '../../../darkweb_data/05/5_31/data_test/v1/fold_' + str(idx_fold) + '/col_' + str(col) + '/'
             if not os.path.exists(output_dir):
                 os.makedirs(output_dir)
 
             # print("Fold: {}, Column: {}".format(idx_fold, col))
             # print(X_test_final[0], Y_test_final[0])
-            pickle.dump(X_train_final, open(output_dir + 'X_train_l.pickle', 'wb'))
-            pickle.dump(Y_train_final, open(output_dir + 'Y_train_l.pickle', 'wb'))
-            pickle.dump(X_test, open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) +
-                                     '/' + 'X_test.pickle', 'wb'))
-            pickle.dump(Y_test, open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) +
-                                     '/' + 'Y_test.pickle', 'wb'))
-            pickle.dump(Y_all_final, open(output_dir + 'Y_train_all.pickle', 'wb'))
-            pickle.dump(Y_test_all, open('../../../darkweb_data/05/5_19/data_test/v3/fold_' + str(idx_fold) +
-                                     '/' + 'Y_test_all.pickle', 'wb'))
+            # pickle.dump(X_train_final, open(output_dir + 'X_train_l.pickle', 'wb'))
+            # pickle.dump(Y_train_final, open(output_dir + 'Y_train_l.pickle', 'wb'))
+            # pickle.dump(X_test, open('../../../darkweb_data/05/5_31/data_test/v1/fold_' + str(idx_fold) +
+            #                          '/' + 'X_test.pickle', 'wb'))
+            # pickle.dump(Y_test, open('../../../darkweb_data/05/5_31/data_test/v1/fold_' + str(idx_fold) +
+            #                          '/' + 'Y_test.pickle', 'wb'))
+            # pickle.dump(Y_all_final, open(output_dir + 'Y_train_all.pickle', 'wb'))
+            # pickle.dump(Y_test_all, open('../../../darkweb_data/05/5_31/data_test/v1/fold_' + str(idx_fold) +
+            #                          '/' + 'Y_test_all.pickle', 'wb'))
 
 
 
