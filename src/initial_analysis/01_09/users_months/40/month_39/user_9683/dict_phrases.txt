@@ -1,3 +1,0 @@
-love,0,1
-wanted,1,1
-today,2,1

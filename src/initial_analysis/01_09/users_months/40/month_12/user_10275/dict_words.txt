@@ -1,2 +1,0 @@
-waning,0,1
-clearnet,1,1

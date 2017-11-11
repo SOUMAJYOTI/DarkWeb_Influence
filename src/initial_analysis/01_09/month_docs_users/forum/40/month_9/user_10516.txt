@@ -1,3 +1,0 @@
-ideally check bootloader integrity hash dont kind hash dummies fde hash check boot loader integrity.
- reset boot loader password good reason place.
- 

@@ -1,3 +1,0 @@
-ekse,0,1
-interested,1,1
-verification,2,1

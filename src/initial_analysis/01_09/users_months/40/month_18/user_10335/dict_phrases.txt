@@ -1,3 +1,0 @@
-summed,0,1
-video,1,1
-explanation,2,1

@@ -1,2 +1,0 @@
-marketprofile,0,1
-hansaprofile,1,1
